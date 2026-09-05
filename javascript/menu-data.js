@@ -1,4 +1,4 @@
-const menuItems = [
+const defaultMenuItems = [
   { id: "masala-chai", name: "Masala Chai", description: "Black tea, cardamom, ginger, and warming spices.", category: "Chai and Coffee", price: 120 },
   { id: "filter-coffee", name: "Filter Coffee", description: "South Indian filter coffee with creamy steamed milk.", category: "Chai and Coffee", price: 160 },
   { id: "velvet-latte", name: "Velvet Latte", description: "House espresso with silky steamed milk.", category: "Chai and Coffee", price: 190 },
@@ -11,4 +11,18 @@ const menuItems = [
 
 function formatCurrency(amount) {
   return `₹${amount.toLocaleString("en-IN")}`;
+}
+
+function getMenuItems() {
+  const savedItems = localStorage.getItem("cafe-creme-menu");
+  if (!savedItems) {
+    const initialItems = defaultMenuItems.map((item) => ({ ...item, isAvailable: true }));
+    localStorage.setItem("cafe-creme-menu", JSON.stringify(initialItems));
+    return initialItems;
+  }
+  return JSON.parse(savedItems).map((item) => ({ ...item, isAvailable: item.isAvailable !== false }));
+}
+
+function saveMenuItems(items) {
+  localStorage.setItem("cafe-creme-menu", JSON.stringify(items));
 }

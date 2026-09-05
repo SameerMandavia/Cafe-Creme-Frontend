@@ -2,15 +2,20 @@ const cartStorageKey = "cafe-creme-cart";
 const cart = JSON.parse(localStorage.getItem(cartStorageKey) || "{}");
 const orderItemsContainer = document.querySelector("#order-items");
 const orderSummary = document.querySelector("#order-summary");
-const checkoutButton = document.querySelector("#checkout-button");
 const orderStatus = document.querySelector("#order-status");
 
 function saveCart() {
   localStorage.setItem(cartStorageKey, JSON.stringify(cart));
+  updateCartCount();
+}
+
+function updateCartCount() {
+  const cartCount = document.querySelector("#cart-count");
+  if (cartCount) cartCount.textContent = Object.values(cart).reduce((total, quantity) => total + quantity, 0);
 }
 
 function renderMenu() {
-  const groups = menuItems.reduce((result, item) => {
+  const groups = getMenuItems().filter((item) => item.isAvailable).reduce((result, item) => {
     result[item.category] ||= [];
     result[item.category].push(item);
     return result;
@@ -32,7 +37,7 @@ function renderMenu() {
 
 function getCartItems() {
   return Object.entries(cart).map(([id, quantity]) => ({
-    item: menuItems.find((menuItem) => menuItem.id === id),
+    item: getMenuItems().find((menuItem) => menuItem.id === id),
     quantity
   })).filter(({ item }) => item);
 }
@@ -51,7 +56,7 @@ function renderCart() {
     `).join("")}
     <hr />
     <div class="d-flex justify-content-between"><strong>Total</strong><strong>${formatCurrency(total)}</strong></div>
-    <button class="btn btn-dark w-100 mt-4" id="checkout-button" type="button">Place order</button>
+    <a class="btn btn-dark w-100 mt-4" href="cart.html">View cart and checkout</a>
   ` : `
     <h2>Your order</h2>
     <p class="empty-order">Your basket is waiting for something delicious.</p>
@@ -62,7 +67,6 @@ function renderCart() {
 
   orderSummary.querySelectorAll(".increase-item").forEach((button) => button.addEventListener("click", () => updateQuantity(button.dataset.itemId, 1)));
   orderSummary.querySelectorAll(".decrease-item").forEach((button) => button.addEventListener("click", () => updateQuantity(button.dataset.itemId, -1)));
-  orderSummary.querySelector("#checkout-button")?.addEventListener("click", submitOrder);
 }
 
 function updateQuantity(itemId, change) {
@@ -72,22 +76,14 @@ function updateQuantity(itemId, change) {
   renderCart();
 }
 
-function submitOrder() {
-  const payload = { items: getCartItems().map(({ item, quantity }) => ({ menuItemId: item.id, quantity })) };
-  orderStatus.textContent = "Order received. We will confirm your collection time shortly.";
-  orderStatus.className = "alert alert-success mt-4";
-  Object.keys(cart).forEach((key) => delete cart[key]);
-  saveCart();
-  renderCart();
-  fetch("/api/orders", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) }).catch(() => {});
-}
-
 renderMenu();
 renderCart();
 orderItemsContainer.addEventListener("click", (event) => {
   const button = event.target.closest(".add-to-cart");
   if (!button) return;
   updateQuantity(button.dataset.itemId, 1);
-  orderStatus.textContent = "Added to your order.";
-  orderStatus.className = "alert alert-info mt-4";
+  if (orderStatus) {
+    orderStatus.textContent = "Added to your order.";
+    orderStatus.className = "alert alert-info mt-4";
+  }
 });

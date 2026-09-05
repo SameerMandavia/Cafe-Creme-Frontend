@@ -1,0 +1,182 @@
+.festival-banner {
+    position: relative;
+    z-index: 1;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    gap: 1.5rem;
+    align-items: center;
+    overflow: hidden;
+    clear: both;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+    padding: 2rem;
+    background: var(--festival-surface, #f5d39a);
+    border: 1px solid var(--festival-border, #d8893d);
+    box-shadow: 0 1rem 2rem rgba(74, 44, 36, 0.08);
+    color: var(--coffee);
+}
+
+.festival-banner::before {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px 12px);
+    content: "";
+    pointer-events: none;
+}
+
+.festival-art {
+    display: grid;
+    width: 4rem;
+    height: 4rem;
+    place-items: center;
+    border-radius: 50%;
+    background: var(--festival-accent, var(--caramel));
+    color: var(--cream);
+    font-size: 2rem;
+}
+
+.festival-eyebrow {
+    margin-bottom: 0.4rem;
+    color: var(--cardamom);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.festival-copy h2 {
+    margin-bottom: 0.5rem;
+    color: var(--coffee);
+    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    letter-spacing: -0.03em;
+}
+
+.festival-copy p:not(.festival-eyebrow) {
+    max-width: 650px;
+    margin-bottom: 1rem;
+    color: #604334;
+    line-height: 1.6;
+}
+
+.festival-name {
+    align-self: start;
+    color: var(--cardamom);
+    font-size: 0.8rem;
+    font-weight: 700;
+    writing-mode: vertical-rl;
+    text-transform: uppercase;
+}
+
+@media (max-width: 767px) {
+    .festival-banner {
+        grid-template-columns: auto 1fr;
+        padding: 1.25rem;
+    }
+
+    .festival-name {
+        display: none;
+    }
+}
+
+body.festival-ganesh-chaturthi {
+    --coffee: #66301f;
+    --cream: #fff8e8;
+    --peach: #e7b24d;
+    --caramel: #bd5427;
+    --cardamom: #536b43;
+    --ink: #352019;
+    --surface: #fffdf7;
+    --border: #e4c48a;
+    --festival-surface: #f5d39a;
+    --festival-border: #d8893d;
+    --festival-accent: #c56a2d;
+}
+
+body.festival-navratri {
+    --coffee: #5a2630;
+    --cream: #fff6ee;
+    --peach: #d88a65;
+    --caramel: #9d3f2f;
+    --cardamom: #5d6845;
+    --ink: #331c22;
+    --surface: #fffaf6;
+    --border: #e1b7a5;
+    --festival-surface: #e8c4a7;
+    --festival-border: #b76545;
+    --festival-accent: #9d3f2f;
+}
+
+body.festival-diwali {
+    --coffee: #4c281d;
+    --cream: #fff8df;
+    --peach: #e5b83c;
+    --caramel: #a54d25;
+    --cardamom: #4d6848;
+    --ink: #2f1b14;
+    --surface: #fffdf5;
+    --border: #e2c477;
+    --festival-surface: #f3d27b;
+    --festival-border: #bf8422;
+    --festival-accent: #a54d25;
+}
+
+body.festival-valentines-day {
+    --coffee: #612b38;
+    --cream: #fff5f4;
+    --peach: #e7a0a9;
+    --caramel: #a9354d;
+    --cardamom: #66705a;
+    --ink: #351c26;
+    --surface: #fffafb;
+    --border: #e7b8bd;
+    --festival-surface: #f2c6c8;
+    --festival-border: #c95f69;
+    --festival-accent: #a9354d;
+}
+
+body.festival-holi {
+    --coffee: #54302a;
+    --cream: #fff7eb;
+    --peach: #f0ae72;
+    --caramel: #bd4b43;
+    --cardamom: #58704f;
+    --ink: #31201b;
+    --surface: #fffdf8;
+    --border: #e5b69a;
+    --festival-surface: #f4c3a4;
+    --festival-border: #d76d45;
+    --festival-accent: #bd4b43;
+}
+
+.festival-copy .btn {
+    border: 0;
+    background: var(--coffee);
+    color: var(--cream);
+    font-weight: 700;
+}
+
+.festival-copy .btn:hover {
+    background: var(--festival-accent, var(--caramel));
+    color: #ffffff;
+    transform: translateY(-2px);
+}
+
+.festival-tradition {
+    display: block;
+    margin-bottom: 1rem;
+    color: #765443;
+    font-style: italic;
+}
+
+body[class*="festival-"] .feature-card,
+body[class*="festival-"] .menu-group,
+body[class*="festival-"] .offer-card,
+body[class*="festival-"] .order-panel,
+body[class*="festival-"] .order-summary,
+body[class*="festival-"] .cart-panel,
+body[class*="festival-"] .confirmation-card,
+body[class*="festival-"] .value-card {
+    background: var(--surface);
+    border-color: var(--border);
+}

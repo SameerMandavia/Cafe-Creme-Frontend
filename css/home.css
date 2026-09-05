@@ -9,6 +9,7 @@
 .cafe-hero-content {
     padding-top: 4rem;
     padding-bottom: 4rem;
+    animation: cafe-content-in 700ms ease-out both;
 }
 
 .cafe-hero h1 {
@@ -71,6 +72,12 @@
     overflow: hidden;
     background: #ffffff;
     border: 1px solid #eadbca;
+    transition: transform 180ms ease, box-shadow 180ms ease;
+}
+
+.feature-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 1rem 2rem rgba(74, 44, 36, 0.12);
 }
 
 .feature-card img {
@@ -128,5 +135,53 @@
 
     .cafe-story-grid > div + div {
         margin-top: 2rem;
+    }
+}
+
+.cafe-live-context {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.65rem;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    color: #ffffff;
+    font-size: 0.9rem;
+}
+
+.cafe-live-context span {
+    padding: 0.35rem 0.7rem;
+    border: 1px solid rgba(255, 255, 255, 0.45);
+    border-radius: 999px;
+    background: rgba(35, 19, 12, 0.35);
+}
+
+.cafe-live-context #cafe-status.is-open {
+    border-color: #c8dfb9;
+    color: #e2f4d4;
+}
+
+.cafe-live-context #cafe-status.is-closed {
+    border-color: #f0c2a5;
+    color: #ffd8c1;
+}
+
+@keyframes cafe-content-in {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .cafe-hero-content,
+    .feature-card,
+    .festival-copy .btn {
+        animation: none;
+        transition: none;
     }
 }

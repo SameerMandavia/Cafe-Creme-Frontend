@@ -5,6 +5,9 @@
     --caramel: #c56a2d;
     --cardamom: #596b4f;
     --ink: #2f211b;
+    --surface: #ffffff;
+    --border: #eadbca;
+    --muted: #6c5a50;
 }
 
 body {
@@ -25,6 +28,11 @@ body {
 .cafe-creme-navbar .nav-link:hover,
 .cafe-creme-navbar .nav-link.active {
     color: var(--peach);
+}
+
+.cafe-creme-navbar .nav-button {
+    border: 0;
+    background: transparent;
 }
 
 .cafe-eyebrow,
@@ -63,8 +71,8 @@ body {
 
 .form-shell {
     padding: 2rem;
-    background: #ffffff;
-    border: 1px solid #eadbca;
+    background: var(--surface);
+    border: 1px solid var(--border);
 }
 
 .form-label {
@@ -74,7 +82,7 @@ body {
 
 .form-control,
 .form-select {
-    border-color: #d8c3ad;
+    border-color: var(--border);
     border-radius: 0;
 }
 
@@ -82,6 +90,10 @@ body {
 .form-select:focus {
     border-color: var(--caramel);
     box-shadow: 0 0 0 0.25rem rgba(197, 106, 45, 0.2);
+}
+
+body[class*="festival-"] {
+    transition: background-color 240ms ease, color 240ms ease;
 }
 
 @media (max-width: 767px) {
