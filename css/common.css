@@ -1,0 +1,103 @@
+:root {
+    --coffee: #4a2c24;
+    --cream: #fff7e8;
+    --peach: #e8bd82;
+    --caramel: #c56a2d;
+    --cardamom: #596b4f;
+    --ink: #2f211b;
+    --surface: #ffffff;
+    --border: #eadbca;
+    --muted: #6c5a50;
+}
+
+body {
+    background: var(--cream);
+    color: var(--ink);
+}
+
+.cafe-creme-navbar {
+    background-color: var(--coffee);
+}
+
+.cafe-creme-navbar .navbar-brand,
+.cafe-creme-navbar .nav-link,
+.cafe-creme-navbar .navbar-toggler {
+    color: var(--cream);
+}
+
+.cafe-creme-navbar .nav-link:hover,
+.cafe-creme-navbar .nav-link.active {
+    color: var(--peach);
+}
+
+.cafe-creme-navbar .nav-button {
+    border: 0;
+    background: transparent;
+}
+
+.cafe-eyebrow,
+.card-kicker {
+    margin-bottom: 0.75rem;
+    color: var(--peach);
+    font-size: 0.78rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+}
+
+.page-section {
+    padding-top: 4rem;
+    padding-bottom: 5rem;
+}
+
+.page-intro {
+    max-width: 720px;
+    margin-bottom: 3rem;
+}
+
+.page-intro h1 {
+    margin-bottom: 1rem;
+    color: var(--coffee);
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    letter-spacing: -0.04em;
+}
+
+.page-intro > p:last-child {
+    max-width: 620px;
+    color: #6c5a50;
+    font-size: 1.1rem;
+    line-height: 1.7;
+}
+
+.form-shell {
+    padding: 2rem;
+    background: var(--surface);
+    border: 1px solid var(--border);
+}
+
+.form-label {
+    color: var(--coffee);
+    font-weight: 700;
+}
+
+.form-control,
+.form-select {
+    border-color: var(--border);
+    border-radius: 0;
+}
+
+.form-control:focus,
+.form-select:focus {
+    border-color: var(--caramel);
+    box-shadow: 0 0 0 0.25rem rgba(197, 106, 45, 0.2);
+}
+
+body[class*="festival-"] {
+    transition: background-color 240ms ease, color 240ms ease;
+}
+
+@media (max-width: 767px) {
+    .form-shell {
+        padding: 1.25rem;
+    }
+}
