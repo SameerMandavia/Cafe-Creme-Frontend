@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Contact | Cafe-Creme</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB"
+      crossorigin="anonymous"
+    />
+    <link rel="stylesheet" href="../css/common.css" />
+    <link rel="stylesheet" href="../css/contact.css" />
+  </head>
+  <body data-page="contact">
+    <div id="site-header"></div>
+    <main class="container page-section">
+      <div class="page-intro">
+        <p class="cafe-eyebrow">Come say hello</p>
+        <h1>Contact Cafe-Creme</h1>
+        <p>
+          Questions about a reservation, order, or celebration? We would love to
+          hear from you.
+        </p>
+      </div>
+      <div class="row g-5">
+        <div class="col-lg-5">
+          <div class="contact-details">
+            <h2>Find us</h2>
+            <p>1, JethaRaja Compound<br />Kon Village, Bhiwandi</p>
+            <h2>Opening hours</h2>
+            <p>Monday - Friday: 8am - 9pm<br />Saturday - Sunday: 9am - 10pm</p>
+            <h2>Reach us</h2>
+            <p>
+              <a href="tel:+918454939332">+91 84549 39332</a><br /><a
+                href="mailto:hello@cafe-creme.example"
+                >hello@cafe-creme.example</a
+              >
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-7">
+          <div class="form-shell">
+            <form id="contact-form">
+              <div class="row g-3">
+                <div class="col-md-6">
+                  <label class="form-label" for="contact-name">Name</label
+                  ><input
+                    class="form-control"
+                    id="contact-name"
+                    name="name"
+                    type="text"
+                    required
+                  />
+                </div>
+                <div class="col-md-6">
+                  <label class="form-label" for="contact-email">Email</label
+                  ><input
+                    class="form-control"
+                    id="contact-email"
+                    name="email"
+                    type="email"
+                    required
+                  />
+                </div>
+                <div class="col-12">
+                  <label class="form-label" for="contact-message">Message</label
+                  ><textarea
+                    class="form-control"
+                    id="contact-message"
+                    name="message"
+                    rows="6"
+                    placeholder="How can we help?"
+                    required
+                  ></textarea>
+                </div>
+                <div class="col-12">
+                  <button class="btn btn-dark" type="submit">
+                    Send message
+                  </button>
+                </div>
+              </div>
+            </form>
+            <output id="contact-status"></output>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div id="site-footer"></div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
+    <script src="../javascript/layout.js"></script>
+    <script src="../javascript/contact.js"></script>
+  </body>
+</html>

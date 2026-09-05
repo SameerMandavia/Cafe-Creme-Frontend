@@ -1,0 +1,45 @@
+.offer-card,
+.offer-note {
+    background: #ffffff;
+    border: 1px solid #eadbca;
+}
+
+.offer-card {
+    height: 100%;
+    padding: 2rem;
+}
+
+.offer-badge {
+    color: var(--caramel);
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.offer-card h2,
+.offer-note h2 {
+    margin: 1rem 0;
+    color: var(--coffee);
+}
+
+.offer-card p,
+.offer-note p {
+    margin-bottom: 0;
+    color: #6c5a50;
+    line-height: 1.6;
+}
+
+.offer-card strong {
+    display: block;
+    margin-top: 1.5rem;
+    color: var(--caramel);
+    font-size: 1.2rem;
+}
+
+.offer-note {
+    margin-top: 3rem;
+    padding: 2rem;
+    background: var(--peach);
+    text-align: center;
+}
