@@ -1,0 +1,35 @@
+.auth-page {
+    display: grid;
+    min-height: 70vh;
+    place-items: center;
+}
+
+.auth-shell {
+    width: min(100%, 460px);
+    padding: 2.5rem;
+    background: #ffffff;
+    border: 1px solid #eadbca;
+}
+
+.auth-shell h1,
+.admin-heading h1,
+.admin-table-shell h2,
+.form-shell h2 {
+    color: var(--coffee);
+}
+
+.auth-switch,
+.demo-note {
+    margin: 1.5rem 0 0;
+    color: #6c5a50;
+    text-align: center;
+}
+
+.auth-switch a {
+    color: var(--caramel);
+    font-weight: 700;
+}
+
+.demo-note {
+    font-size: 0.8rem;
+}
