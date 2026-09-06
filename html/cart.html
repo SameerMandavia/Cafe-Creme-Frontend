@@ -3,27 +3,36 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart | Cafe-Creme</title>
+    <title>Checkout | Cafe-Creme</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/cart.css" />
     <link rel="stylesheet" href="../css/festival.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
   </head>
   <body data-page="cart">
     <div id="site-header"></div>
     <main class="container page-section">
-      <div class="page-intro"><p class="cafe-eyebrow">Almost ready</p><h1>Your cart</h1><p>Review your favourites, choose a collection time, and place your order.</p></div>
+      <div class="checkout-intro"><p class="cafe-eyebrow">One last step</p><h1>Review and place your order</h1><p>Everything you need for a smooth cafe delivery or quick pickup.</p><div class="checkout-steps" aria-label="Checkout progress"><span data-step="1" class="is-active"><b>1</b> Your bag</span><i></i><span data-step="2"><b>2</b> Details</span><i></i><span data-step="3"><b>3</b> Confirm</span></div></div>
       <div id="cart-empty" class="empty-cart d-none"><h2>Your cart is empty</h2><p>Add something delicious from our menu to get started.</p><a class="btn btn-dark" href="menu.html">Browse menu</a></div>
       <div id="cart-content" class="row g-4">
-        <div class="col-lg-7"><section class="cart-panel"><div id="cart-items"></div></section></div>
-        <div class="col-lg-5"><section class="cart-panel checkout-panel"><h2>Checkout</h2><form id="checkout-form"><label class="form-label" for="checkout-name">Your name</label><input class="form-control mb-3" id="checkout-name" name="name" required /><label class="form-label" for="checkout-phone">Phone number</label><input class="form-control mb-3" id="checkout-phone" name="phone" type="tel" required /><label class="form-label" for="checkout-time">Collection time</label><select class="form-select mb-3" id="checkout-time" name="collectionTime" required><option value="">Choose a time</option><option>10:00 AM - 10:15 AM</option><option>12:30 PM - 12:45 PM</option><option>5:00 PM - 5:15 PM</option><option>7:30 PM - 7:45 PM</option></select><div class="checkout-total d-flex justify-content-between"><strong>Total</strong><strong id="cart-total">₹0</strong></div><button class="btn btn-dark w-100 mt-4" type="submit">Place order</button></form><output id="checkout-status"></output></section></div>
-      </div>
+        <div class="col-lg-7"><section class="cart-panel"><div class="cart-panel-heading"><div><p class="cafe-eyebrow">Your bag</p><h2>Your selected items</h2></div><div class="cart-heading-actions"><a href="menu.html">Add more</a><button class="panel-toggle" id="toggle-cart-items" type="button" aria-expanded="true">Collapse</button></div></div><div id="cart-items"></div></section></div>
+        <div class="col-lg-5"><section class="checkout-panel">
+          <div class="checkout-panel-heading"><p class="cafe-eyebrow">Checkout</p><h2>How should we get it to you?</h2></div>
+          <form id="checkout-form">
+            <fieldset class="fulfilment-options"><legend class="visually-hidden">Fulfilment method</legend><label class="fulfilment-option is-active"><input type="radio" name="fulfilment" value="delivery" checked /><span><strong>Delivery</strong><small>To your doorstep</small></span></label><label class="fulfilment-option"><input type="radio" name="fulfilment" value="pickup" /><span><strong>Pickup</strong><small>Collect from cafe</small></span></label></fieldset>
+            <div class="checkout-section"><h3>Your details</h3><label class="form-label" for="checkout-name">Full name</label><input class="form-control mb-3" id="checkout-name" name="name" autocomplete="name" required /><label class="form-label" for="checkout-phone">Phone number</label><input class="form-control" id="checkout-phone" name="phone" type="tel" inputmode="tel" autocomplete="tel" required /></div>
+            <div id="delivery-fields" class="checkout-section"><h3>Delivery address</h3><div class="location-tools"><button class="btn btn-outline-dark btn-sm" id="use-current-location" type="button">Use my current location</button><span id="location-status" role="status">Search your address or choose it on the map.</span></div><label class="form-label" for="address-search">Search address</label><input class="form-control mb-2" id="address-search" type="search" placeholder="Start typing your address" autocomplete="street-address" /><button class="map-toggle" id="toggle-map" type="button" aria-expanded="false">Show map</button><div id="address-map" class="address-map is-collapsed" aria-label="Choose your delivery location"></div><input id="checkout-latitude" name="latitude" type="hidden" /><input id="checkout-longitude" name="longitude" type="hidden" /><label class="form-label" for="checkout-address">Confirmed address</label><textarea class="form-control mb-3" id="checkout-address" name="address" rows="2" placeholder="House / flat number, street, area"></textarea><label class="form-label" for="checkout-landmark">Landmark <span>(optional)</span></label><input class="form-control" id="checkout-landmark" name="landmark" placeholder="Near a landmark" /></div>
+            <div class="checkout-section"><h3 id="time-heading">Delivery time</h3><label class="form-label" for="checkout-time">When would you like it?</label><select class="form-select" id="checkout-time" name="collectionTime" required><option value="">Choose a time</option><option value="As soon as possible">As soon as possible</option><option value="In 30–40 minutes">In 30–40 minutes</option><option value="Schedule for later">Schedule for later</option></select></div>
+            <div class="checkout-section"><label class="form-label" for="checkout-note">Order note <span>(optional)</span></label><input class="form-control" id="checkout-note" name="note" placeholder="Allergies, landmark, or a note for the cafe" /></div>
+            <div class="checkout-section coupon-section"><h3>Have a coupon?</h3><div class="input-group"><input class="form-control" id="checkout-coupon" name="coupon" placeholder="Try CAFE10" autocomplete="off" /><button class="btn btn-outline-dark" id="apply-coupon" type="button">Apply</button></div><small id="coupon-status" class="form-hint"></small></div><div class="checkout-section"><h3>Payment method</h3><div class="payment-methods"><label class="payment-method is-active"><input type="radio" name="payment" value="Cash on delivery" checked /><span>Cash on delivery</span></label><label class="payment-method"><input type="radio" name="payment" value="UPI / Card" /><span>UPI / Card</span></label></div></div><div class="bill-summary"><h3>Bill details</h3><div><span>Item total</span><strong id="cart-subtotal">₹0</strong></div><div><span>Delivery fee</span><strong id="delivery-fee">₹0</strong></div><div id="discount-row" class="d-none"><span>Coupon discount</span><strong id="coupon-discount">-₹0</strong></div><div class="bill-total"><span>To pay</span><strong id="cart-total">₹0</strong></div></div>
+            <button class="btn btn-dark place-order-button w-100" type="submit"><span>Place order</span><strong id="place-order-total">₹0</strong></button><p class="checkout-reassurance">Secure demo checkout · You can review your order before it is prepared.</p><div class="checkout-trust"><span>✓ Secure checkout</span><span>✓ Freshly prepared</span><span>✓ Easy support</span></div>
+          </form><output id="checkout-status"></output>
+        </section></div>
+      </div><div class="mobile-order-bar"><span><small>Total</small><strong id="mobile-order-total">₹0</strong></span><button class="btn btn-dark" id="mobile-place-order" type="button">Place order</button></div>
     </main>
     <div id="site-footer"></div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
-    <script src="../javascript/layout.js"></script>
-    <script src="../javascript/festival.js"></script>
-    <script src="../javascript/menu-data.js"></script>
-    <script src="../javascript/cart.js"></script>
+    <script src="../javascript/layout.js"></script><script src="../javascript/festival.js"></script><script src="../javascript/menu-data.js"></script><script src="../javascript/map-config.js"></script><script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js" integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script><script src="../javascript/cart.js"></script>
   </body>
 </html>

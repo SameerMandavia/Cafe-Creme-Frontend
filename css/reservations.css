@@ -1,3 +1,6 @@
 .page-section .form-shell {
     max-width: 920px;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-soft);
 }
+.reservation-intro { color: var(--muted); }

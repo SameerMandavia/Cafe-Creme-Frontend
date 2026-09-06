@@ -8,16 +8,36 @@
     --surface: #ffffff;
     --border: #eadbca;
     --muted: #6c5a50;
+    --radius-sm: 0.6rem;
+    --radius-md: 1rem;
+    --radius-lg: 1.35rem;
+    --shadow-soft: 0 0.5rem 1.4rem rgba(74, 44, 36, 0.07);
+    --shadow-lift: 0 1rem 2rem rgba(74, 44, 36, 0.12);
 }
 
 body {
     background: var(--cream);
     color: var(--ink);
+    font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
 }
+
+button, a { transition: color 180ms ease, background-color 180ms ease, border-color 180ms ease, transform 180ms ease, box-shadow 180ms ease; }
+.cafe-creme-navbar .navbar-brand { transition: letter-spacing 220ms ease, color 180ms ease; }
+.cafe-creme-navbar .navbar-brand:hover { letter-spacing: 0.03em; }
+.card, .feature-card, .value-card, .offer-card, .admin-card, .cart-panel, .checkout-panel, .order-panel, .form-shell { transition: transform 220ms ease, box-shadow 220ms ease, border-color 220ms ease; }
+.card:hover, .feature-card:hover, .value-card:hover, .offer-card:hover, .admin-card:hover, .cart-panel:hover, .checkout-panel:hover, .order-panel:hover, .form-shell:hover { transform: translateY(-4px); box-shadow: 0 1rem 2rem rgba(74, 44, 36, 0.1); }
+.btn-dark { background: var(--coffee); border-color: var(--coffee); }
+.btn-dark:hover, .btn-dark:focus { background: #2f1b16; border-color: #2f1b16; transform: translateY(-1px); }
 
 .cafe-creme-navbar {
     background-color: var(--coffee);
+    position: sticky;
+    top: 0;
+    z-index: 1030;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.12);
 }
+
+.cafe-creme-navbar .cart-link .badge { background: var(--peach); color: var(--coffee); }
 
 .cafe-creme-navbar .navbar-brand,
 .cafe-creme-navbar .nav-link,
@@ -95,9 +115,36 @@ body {
 body[class*="festival-"] {
     transition: background-color 240ms ease, color 240ms ease;
 }
+.site-footer-content { display: flex; align-items: end; justify-content: space-between; gap: 2rem; margin-top: 2rem; border-top: 1px solid var(--border); color: var(--muted); }
+.footer-brand { display: inline-block; margin-bottom: 0.35rem; color: var(--coffee); font-family: Georgia, serif; font-size: 1.35rem; font-weight: 700; text-decoration: none; }
+.site-footer-content p { margin: 0; font-size: 0.82rem; }
+.footer-links { display: flex; flex-wrap: wrap; gap: 1rem; }
+.footer-links a { color: var(--coffee); font-size: 0.8rem; font-weight: 700; text-decoration: none; }
+.footer-links a:hover { color: var(--caramel); }
+.cafe-creme-navbar .navbar-brand { display: inline-flex; align-items: center; gap: 0.55rem; font-weight: 800; letter-spacing: -0.02em; }
+.brand-mark { display: grid; width: 2rem; height: 2rem; place-items: center; border: 1px solid rgba(255,255,255,0.35); border-radius: 0.55rem; color: var(--peach); font-family: Georgia, serif; font-size: 0.68rem; letter-spacing: -0.08em; }
+.nav-location { display: flex; align-items: center; gap: 0.5rem; margin-left: 1.5rem; padding: 0.35rem 0.7rem; border-left: 1px solid rgba(255,255,255,0.18); color: var(--cream); }
+.nav-location > span { color: var(--peach); font-size: 1.15rem; }
+.nav-location div { display: grid; gap: 0.05rem; }
+.nav-location small { color: rgba(255,255,255,0.62); font-size: 0.62rem; }
+.nav-location strong { font-size: 0.74rem; }
+.mobile-bottom-nav { display: none; }
+
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+    .card:hover, .feature-card:hover, .value-card:hover, .offer-card:hover, .admin-card:hover, .cart-panel:hover, .checkout-panel:hover, .order-panel:hover, .form-shell:hover { transform: none; }
+}
 
 @media (max-width: 767px) {
     .form-shell {
         padding: 1.25rem;
     }
+    body { padding-bottom: 4.4rem; }
+    .nav-location { display: none; }
+    .mobile-bottom-nav { position: fixed; right: 0; bottom: 0; left: 0; z-index: 1040; display: grid; grid-template-columns: repeat(4, 1fr); padding: 0.45rem 0.5rem calc(0.45rem + env(safe-area-inset-bottom)); border-top: 1px solid var(--border); background: rgba(255,255,255,0.94); box-shadow: 0 -0.5rem 1.5rem rgba(47,33,27,0.1); backdrop-filter: blur(14px); }
+    .mobile-bottom-nav a { display: grid; justify-items: center; gap: 0.15rem; color: var(--muted); font-size: 1rem; text-decoration: none; }
+    .mobile-bottom-nav small { font-size: 0.65rem; font-weight: 700; }
+    .mobile-bottom-nav a.active { color: var(--coffee); }
+    .mobile-bottom-nav a.active span { color: var(--caramel); transform: translateY(-1px); }
+    .site-footer-content { align-items: start; flex-direction: column; gap: 1rem; }
 }

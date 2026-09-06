@@ -1,25 +1,36 @@
 const menuContainer = document.querySelector("#menu-categories");
+const searchInput = document.querySelector("#menu-search");
+const filtersContainer = document.querySelector("#menu-filters");
+const resultCount = document.querySelector("#menu-result-count");
+const cartKey = "cafe-creme-cart";
+const festivalFeature = document.querySelector("#festival-menu-feature");
+const menuModalElement = document.querySelector("#menu-item-modal");
+const menuModal = menuModalElement && window.bootstrap ? new bootstrap.Modal(menuModalElement) : null;
+let modalItemId = "";
+let activeCategory = "All";
 
-function renderMenuPage() {
-  const groups = getMenuItems().filter((item) => item.isAvailable).reduce((result, item) => {
-    result[item.category] ||= [];
-    result[item.category].push(item);
-    return result;
-  }, {});
-
-  menuContainer.innerHTML = Object.entries(groups).map(([category, items]) => `
-    <div class="col-lg-6">
-      <section class="menu-group">
-        <div class="menu-group-heading"><h2>${category}</h2><span>Fresh today</span></div>
-        ${items.map((item) => `
-          <div class="menu-item">
-            <div><h3>${item.name}</h3><p>${item.description}</p></div>
-            <strong>${formatCurrency(item.price)}</strong>
-          </div>
-        `).join("")}
-      </section>
-    </div>
-  `).join("");
+function escapeHtml(value = "") { const node = document.createElement("div"); node.textContent = String(value); return node.innerHTML; }
+function getCart() { return JSON.parse(localStorage.getItem(cartKey) || "{}"); }
+function updateCartCount() { const badge = document.querySelector("#cart-count"); if (badge) badge.textContent = Object.values(getCart()).reduce((total, quantity) => total + quantity, 0); }
+function updateMenuQuantityControl(id) {
+  const item = getMenuItems().find((entry) => entry.id === id);
+  const trigger = [...menuContainer.querySelectorAll("[data-quantity-id]")].find((element) => element.dataset.quantityId === id);
+  const action = trigger?.closest(".menu-item-action");
+  if (!item || !action) return;
+  const quantity = getCart()[id] || 0;
+  action.innerHTML = `<strong>${formatCurrency(item.price)}</strong>${quantity ? `<div class="menu-quantity" aria-label="${escapeHtml(item.name)} quantity"><button type="button" data-quantity-id="${item.id}" data-change="-1">-</button><span>${quantity}</span><button type="button" data-quantity-id="${item.id}" data-change="1">+</button></div>` : `<button class="btn btn-dark btn-sm" type="button" data-quantity-id="${item.id}" data-change="1">Add</button>`}`;
 }
-
-renderMenuPage();
+function changeCartQuantity(id, change) { const cart = getCart(); const next = (cart[id] || 0) + change; if (next <= 0) delete cart[id]; else cart[id] = next; localStorage.setItem(cartKey, JSON.stringify(cart)); updateCartCount(); updateMenuQuantityControl(id); }
+function removeUnavailableCartItems(items) { const ids = new Set(items.map((item) => item.id)); const cart = getCart(); let changed = false; Object.keys(cart).forEach((id) => { if (!ids.has(id)) { delete cart[id]; changed = true; } }); if (changed) localStorage.setItem(cartKey, JSON.stringify(cart)); updateCartCount(); }
+function renderFilters(items) { const categories = ["All", ...new Set(items.map((item) => item.category))]; filtersContainer.innerHTML = categories.map((category) => `<button class="menu-filter ${category === activeCategory ? "is-active" : ""}" type="button" data-category="${escapeHtml(category)}">${escapeHtml(category)}</button>`).join(""); }
+function renderMenuPage() {
+  const available = getMenuItems().filter((item) => item.isAvailable); removeUnavailableCartItems(available); const cart = getCart(); const term = searchInput.value.trim().toLowerCase();
+  const activeFestival = document.body.dataset.festival;
+  const campaign = activeFestival && window.festivalCampaigns?.[activeFestival];
+  if (campaign && festivalFeature) { festivalFeature.className = "festival-menu-feature"; festivalFeature.innerHTML = `<div><strong>${escapeHtml(campaign.offer)}</strong><p>${escapeHtml(campaign.note)} ${escapeHtml(campaign.discount)} with ${escapeHtml(campaign.coupon)}.</p></div><a class="btn btn-dark btn-sm" href="offers.html">View offer</a>`; }
+  const items = available.filter((item) => (activeCategory === "All" || item.category === activeCategory) && `${item.name} ${item.description} ${item.category}`.toLowerCase().includes(term));
+  const groups = items.reduce((result, item) => { (result[item.category] ||= []).push(item); return result; }, {}); renderFilters(available);
+  resultCount.textContent = items.length ? `${items.length} item${items.length === 1 ? "" : "s"} available` : "No items match your search.";
+  menuContainer.innerHTML = Object.entries(groups).map(([category, group]) => `<div class="col-lg-6"><section class="menu-group"><div class="menu-group-heading"><h2>${escapeHtml(category)}</h2><span>Fresh today</span></div>${group.map((item) => `<article class="menu-item" data-item-id="${item.id}">${item.image ? `<img class="menu-item-image" src="${escapeHtml(item.image)}" alt="${escapeHtml(item.name)}" loading="lazy" />` : ""}<div class="menu-item-copy"><div class="menu-item-title"><h3>${escapeHtml(item.name)}</h3>${item.isPopular ? `<span class="menu-badge">Popular</span>` : ""}</div><p>${escapeHtml(item.description)}</p><small class="dietary-label">${escapeHtml(item.dietary)}</small><small class="menu-meta">★ ${Number(item.rating || 4.7).toFixed(1)} · ${escapeHtml(item.prepTime || "10 min")}</small></div><div class="menu-item-action"><strong>${formatCurrency(item.price)}</strong>${cart[item.id] ? `<div class="menu-quantity" aria-label="${escapeHtml(item.name)} quantity"><button type="button" data-quantity-id="${item.id}" data-change="-1">-</button><span>${cart[item.id]}</span><button type="button" data-quantity-id="${item.id}" data-change="1">+</button></div>` : `<button class="btn btn-dark btn-sm" type="button" data-quantity-id="${item.id}" data-change="1">Add</button>`}</div></article>`).join("")}</section></div>`).join("");
+}
+searchInput.addEventListener("input", renderMenuPage); filtersContainer.addEventListener("click", (event) => { const button = event.target.closest("[data-category]"); if (button) { activeCategory = button.dataset.category; renderMenuPage(); } }); menuContainer.addEventListener("click", (event) => { const button = event.target.closest("[data-quantity-id]"); if (button) { changeCartQuantity(button.dataset.quantityId, Number(button.dataset.change)); return; } const itemElement = event.target.closest(".menu-item"); if (!itemElement || !menuModal) return; const item = getMenuItems().find((entry) => entry.id === itemElement.dataset.itemId); if (!item) return; modalItemId = item.id; document.querySelector("#menu-modal-image").src = item.image || ""; document.querySelector("#menu-modal-image").alt = item.name; document.querySelector("#menu-modal-category").textContent = item.category; document.querySelector("#menu-item-modal-title").textContent = item.name; document.querySelector("#menu-modal-description").textContent = item.description; document.querySelector("#menu-modal-rating").textContent = `★ ${Number(item.rating || 4.7).toFixed(1)} rating`; document.querySelector("#menu-modal-time").textContent = item.prepTime || "10 min"; document.querySelector("#menu-modal-price").textContent = formatCurrency(item.price); menuModal.show(); }); document.querySelector("#menu-modal-add")?.addEventListener("click", () => { changeCartQuantity(modalItemId, 1); menuModal?.hide(); }); renderMenuPage();

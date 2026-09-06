@@ -1,6 +1,40 @@
 const timeGreeting = document.querySelector("#time-greeting");
 const localDate = document.querySelector("#local-date");
 const cafeStatus = document.querySelector("#cafe-status");
+const homeLocationLabel = document.querySelector("#home-location-label");
+const heroAddressForm = document.querySelector("#hero-address-form");
+const heroAddressInput = document.querySelector("#hero-address-input");
+const homeOrderTracker = document.querySelector("#home-order-tracker");
+const homeTrackerStatus = document.querySelector("#home-tracker-status");
+const homeTrackerMeta = document.querySelector("#home-tracker-meta");
+const savedAddress = JSON.parse(localStorage.getItem("cafe-creme-saved-address") || "null");
+if (homeLocationLabel && savedAddress?.address) {
+  const displayAddress = /^GPS location/i.test(savedAddress.address) ? "Current location" : savedAddress.address;
+  homeLocationLabel.textContent = displayAddress.length > 30 ? `${displayAddress.slice(0, 30)}…` : displayAddress;
+}
+if (heroAddressInput && savedAddress?.address && !/^GPS location/i.test(savedAddress.address)) heroAddressInput.value = savedAddress.address;
+heroAddressForm?.addEventListener("submit", (event) => {
+  event.preventDefault();
+  const address = heroAddressInput.value.trim();
+  if (!address) { heroAddressInput.focus(); return; }
+  localStorage.setItem("cafe-creme-saved-address", JSON.stringify({ address, latitude: "", longitude: "" }));
+  if (homeLocationLabel) homeLocationLabel.textContent = address.length > 30 ? `${address.slice(0, 30)}…` : address;
+  const locationLabel = document.querySelector(".nav-location strong");
+  if (locationLabel) locationLabel.textContent = address.length > 24 ? `${address.slice(0, 24)}…` : address;
+  window.location.href = "menu.html";
+});
+const recentOrders = JSON.parse(localStorage.getItem("cafe-creme-orders") || "[]");
+const activeDeliveryOrder = recentOrders.find((order) => order.fulfilment === "delivery" && !["Delivered", "Cancelled"].includes(order.status));
+const latestOrder = activeDeliveryOrder || recentOrders[0];
+if (latestOrder && homeOrderTracker) {
+  homeOrderTracker.classList.remove("d-none");
+  const latestStatus = latestOrder.status || "Order received";
+  homeTrackerStatus.textContent = latestStatus === "Delivered" ? "Latest order delivered" : latestStatus;
+  homeTrackerMeta.textContent = activeDeliveryOrder ? (latestStatus === "Out for delivery" ? "Arriving soon · ETA 25–35 min" : "We’re preparing it with care") : "View your previous order details";
+  const trackerLink = homeOrderTracker.querySelector("a");
+  trackerLink.textContent = activeDeliveryOrder ? "Track now →" : "View orders →";
+  trackerLink.href = activeDeliveryOrder ? "orders.html" : "orders.html";
+}
 
 function updateCafeContext() {
   const now = new Date();

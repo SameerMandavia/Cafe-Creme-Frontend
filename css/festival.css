@@ -2,39 +2,50 @@
     position: relative;
     z-index: 1;
     display: grid;
-    grid-template-columns: auto 1fr auto;
-    gap: 1.5rem;
+    grid-template-columns: 6.5rem minmax(0, 1fr) auto;
+    gap: 1.75rem;
     align-items: center;
     overflow: hidden;
     clear: both;
     margin-top: 2.5rem;
     margin-bottom: 1rem;
-    padding: 2rem;
-    background: var(--festival-surface, #f5d39a);
+    padding: 2.25rem 2.5rem;
+    background: radial-gradient(circle at 86% 42%, color-mix(in srgb, var(--festival-accent, #a9354d) 16%, transparent) 0 5rem, transparent 5.1rem), radial-gradient(circle at 85% 10%, rgba(255,255,255,0.72), transparent 29%), linear-gradient(125deg, var(--festival-surface, #f5d39a), color-mix(in srgb, var(--festival-surface, #f5d39a) 70%, white));
     border: 1px solid var(--festival-border, #d8893d);
-    box-shadow: 0 1rem 2rem rgba(74, 44, 36, 0.08);
+    box-shadow: 0 1.5rem 3rem rgba(74, 44, 36, 0.12);
     color: var(--coffee);
+    border-radius: 1.25rem;
+    isolation: isolate;
 }
+
+.festival-dismiss { position: absolute; top: 0.75rem; right: 0.9rem; z-index: 2; width: 2rem; height: 2rem; border: 0; border-radius: 50%; background: rgba(255,255,255,0.45); color: var(--coffee); font-size: 1.25rem; line-height: 1; }
+.festival-dismiss:hover { background: var(--coffee); color: var(--cream); }
 
 .festival-banner::before {
     position: absolute;
     inset: 0;
     z-index: -1;
-    background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.18) 0 1px, transparent 1px 12px);
+    background-image: repeating-linear-gradient(135deg, rgba(255, 255, 255, 0.22) 0 1px, transparent 1px 14px);
     content: "";
     pointer-events: none;
 }
 
 .festival-art {
     display: grid;
-    width: 4rem;
-    height: 4rem;
+    position: relative;
+    width: 5.5rem;
+    height: 5.5rem;
     place-items: center;
     border-radius: 50%;
-    background: var(--festival-accent, var(--caramel));
+    background: linear-gradient(145deg, var(--festival-accent, var(--caramel)), var(--coffee));
     color: var(--cream);
-    font-size: 2rem;
+    font-family: Georgia, serif;
+    font-size: 2.8rem;
+    box-shadow: 0 0.8rem 1.5rem rgba(74,44,36,0.2), inset 0 0 0 1px rgba(255,255,255,0.35);
+    animation: festival-art-float 4s ease-in-out infinite;
 }
+
+.festival-art::after { position: absolute; inset: -0.5rem; border: 1px solid rgba(255,255,255,0.5); border-radius: inherit; content: ""; opacity: 0.55; }
 
 .festival-eyebrow {
     margin-bottom: 0.4rem;
@@ -48,7 +59,8 @@
 .festival-copy h2 {
     margin-bottom: 0.5rem;
     color: var(--coffee);
-    font-size: clamp(1.6rem, 3vw, 2.4rem);
+    font-size: clamp(1.8rem, 3.4vw, 2.8rem);
+    line-height: 1.05;
     letter-spacing: -0.03em;
 }
 
@@ -180,3 +192,27 @@ body[class*="festival-"] .value-card {
     background: var(--surface);
     border-color: var(--border);
 }
+
+.festival-banner::after { position: absolute; right: -5rem; bottom: -12rem; z-index: -1; width: 25rem; height: 25rem; border: 1px solid rgba(255,255,255,0.5); border-radius: 50%; box-shadow: 0 0 0 2.5rem rgba(255,255,255,0.14), 0 0 0 5rem rgba(255,255,255,0.1); content: ""; }
+
+.festival-offer { display: grid; gap: 0.15rem; max-width: 420px; margin: 1rem 0; padding: 0.8rem 1rem; border-left: 3px solid var(--festival-accent, var(--caramel)); background: rgba(255,255,255,0.42); }
+.festival-offer strong { color: var(--coffee); }
+.festival-offer span { color: var(--caramel); font-weight: 800; }
+.festival-offer small { color: #765443; }
+.festival-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 0.75rem; }
+.festival-coupon { padding: 0.45rem 0.7rem; border: 1px dashed var(--festival-accent, var(--caramel)); border-radius: 0.4rem; color: var(--coffee); font-size: 0.78rem; font-weight: 800; }
+.festival-countdown { width: 100%; color: var(--cardamom); font-size: 0.76rem; font-weight: 700; }
+.festival-offer { border: 1px solid rgba(255,255,255,0.65); border-left-width: 4px; border-radius: 0.7rem; box-shadow: 0 0.4rem 1rem rgba(74,44,36,0.06); }
+.festival-coupon { background: rgba(255,255,255,0.42); letter-spacing: 0.04em; }
+@keyframes festival-art-float { 0%, 100% { transform: translateY(0) rotate(-2deg); } 50% { transform: translateY(-6px) rotate(2deg); } }
+@media (max-width: 767px) {
+    .festival-banner { gap: 1rem; margin-top: 1.5rem; padding: 1.25rem; }
+    .festival-art { width: 3.8rem; height: 3.8rem; font-size: 1.9rem; }
+    .festival-copy h2 { font-size: 1.7rem; }
+    .festival-copy p:not(.festival-eyebrow) { font-size: 0.9rem; }
+}
+@media (prefers-reduced-motion: reduce) { .festival-art { animation: none; } }
+
+/* Campaign-card finish: keep the festival name readable while giving the artwork room to breathe. */
+.festival-name { writing-mode: horizontal-tb; align-self: start; justify-self: end; padding: 0.55rem 0.85rem; border: 1px solid rgba(255,255,255,0.65); border-radius: 999px; background: rgba(255,255,255,0.42); box-shadow: 0 0.4rem 1rem rgba(74,44,36,0.07); font-size: 0.7rem; letter-spacing: 0.08em; }
+@media (max-width: 767px) { .festival-name { display: none; } }

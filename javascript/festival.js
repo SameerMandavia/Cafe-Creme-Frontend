@@ -317,9 +317,26 @@ const festivalCalendar = [
 
 function getCurrentFestival() {
   const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata" }).format(new Date());
+  const adminSetting = JSON.parse(localStorage.getItem("cafe-creme-active-festival") || "null");
+  if (adminSetting && Object.prototype.hasOwnProperty.call(adminSetting, "enabled")) {
+    if (!adminSetting.enabled || !adminSetting.festivalId) return null;
+    const schedule = adminSetting.schedule;
+    if (schedule?.enabled && (!schedule.start || !schedule.end || today < schedule.start || today > schedule.end)) return null;
+    return festivalCalendar.find((festival) => festival.id === adminSetting.festivalId) || null;
+  }
   const previewFestival = new URLSearchParams(window.location.search).get("festival");
-  if (previewFestival === "none") return null;
-  if (previewFestival) return festivalCalendar.find((festival) => festival.id === previewFestival);
+  const previewKey = "cafe-creme-festival-preview";
+  if (previewFestival === "none") {
+    sessionStorage.removeItem(previewKey);
+    return null;
+  }
+  if (previewFestival) {
+    const selectedFestival = festivalCalendar.find((festival) => festival.id === previewFestival);
+    if (selectedFestival) sessionStorage.setItem(previewKey, selectedFestival.id);
+    return selectedFestival;
+  }
+  const savedPreview = sessionStorage.getItem(previewKey);
+  if (savedPreview) return festivalCalendar.find((festival) => festival.id === savedPreview) || null;
   return festivalCalendar
     .filter((festival) => today >= festival.start && today <= festival.end)
     .sort((first, second) => (festivalPriority[second.id] || 0) - (festivalPriority[first.id] || 0))[0];
@@ -378,13 +395,23 @@ const festivalPriority = {
   christmas: 90
 };
 
+function applyFestivalThemeVariables(festival) {
+  const festivalClasses = festivalCalendar.map((item) => `festival-${item.id}`);
+  document.body.classList.remove(...festivalClasses);
+  if (!festival) {
+    document.body.removeAttribute("data-festival");
+    Object.entries(festivalThemes.default).forEach(([name, value]) => document.body.style.setProperty(`--${name}`, value));
+    return;
+  }
+  document.body.classList.add(`festival-${festival.id}`);
+  document.body.dataset.festival = festival.id;
+  const theme = festivalThemes[festivalThemeNames[festival.id] || "default"];
+  Object.entries(theme).forEach(([name, value]) => document.body.style.setProperty(`--${name}`, value));
+}
+
 const currentFestival = getCurrentFestival();
 if (currentFestival) {
-  document.body.classList.add(`festival-${currentFestival.id}`);
-  document.body.dataset.festival = currentFestival.id;
-  const themeName = festivalThemeNames[currentFestival.id] || "default";
-  const theme = festivalThemes[themeName];
-  Object.entries(theme).forEach(([name, value]) => document.body.style.setProperty(`--${name}`, value));
+  applyFestivalThemeVariables(currentFestival);
   if (festivalBanner) {
     festivalBanner.classList.remove("d-none");
     festivalBanner.innerHTML = `
@@ -393,4 +420,67 @@ if (currentFestival) {
     <div class="festival-name">${currentFestival.name}</div>
   `;
   }
+} else {
+  applyFestivalThemeVariables(null);
+}
+
+window.addEventListener("storage", (event) => {
+  if (event.key === "cafe-creme-active-festival") window.location.reload();
+});
+window.addEventListener("cafe-creme-festival-change", (event) => {
+  applyFestivalThemeVariables(getCurrentFestival());
+});
+window.setInterval(() => {
+  const latestFestivalId = getCurrentFestival()?.id || "";
+  if (latestFestivalId !== (currentFestival?.id || "")) window.location.reload();
+}, 60000);
+
+const festivalCampaigns = {
+  "ganesh-chaturthi": { offer: "Ganpati Bappa Sharing Box", price: "₹299", discount: "10% off", coupon: "GANPATI10", note: "Saffron chai, cardamom bun, and a festive sweet." },
+  diwali: { offer: "Diwali Glow Box", price: "₹499", discount: "15% off", coupon: "DIWALI15", note: "A shareable box of coffee, bakes, and festive sweetness." },
+  holi: { offer: "Holi Coolers Combo", price: "₹349", discount: "10% off", coupon: "HOLI10", note: "Colourful coolers and playful bakery treats." },
+  christmas: { offer: "Christmas Bake Box", price: "₹599", discount: "15% off", coupon: "MERRY15", note: "Festive bakes made for sharing." },
+  "valentines-day": { offer: "Made-for-two Coffee Box", price: "₹399", discount: "10% off", coupon: "LOVE10", note: "Two coffees and something sweet to share." }
+};
+
+Object.values(festivalCampaigns).forEach((campaign) => { campaign.price = String(campaign.price).replace(/[^0-9]/g, ""); });
+const festivalCurrency = (amount) => `${String.fromCodePoint(0x20B9)}${amount}`;
+const savedFestivalCampaigns = JSON.parse(localStorage.getItem("cafe-creme-festival-campaigns") || "{}");
+Object.entries(savedFestivalCampaigns).forEach(([id, value]) => {
+  if (Array.isArray(value)) {
+    const [offer, price, discount, coupon, note] = value;
+    savedFestivalCampaigns[id] = { offer: offer || "Seasonal Cafe Special", price: price || "", discount: discount || "", coupon: coupon || "", note: note || "Discover something special from the Cafe-Creme kitchen." };
+  }
+});
+Object.assign(festivalCampaigns, savedFestivalCampaigns);
+Object.values(festivalCampaigns).forEach((campaign) => {
+  campaign.offer = campaign.offer || "Seasonal Cafe Special";
+  campaign.price = String(campaign.price || "").replace(/[^0-9]/g, "");
+  campaign.discount = campaign.discount || "Seasonal saving";
+  campaign.coupon = campaign.coupon || "";
+  campaign.note = campaign.note || "Discover something special from the Cafe-Creme kitchen.";
+});
+window.festivalCampaigns = festivalCampaigns;
+
+function safeFestivalArt(festival) {
+  if (festival.art && !/[ÃÂâà]/.test(festival.art)) return festival.art;
+  return { diwali: "✦", holi: "●", "valentines-day": "♥", christmas: "✦" }[festival.id] || "✦";
+}
+
+if (currentFestival && festivalBanner) {
+  const campaign = festivalCampaigns[currentFestival.id] || { offer: "Seasonal Cafe Special", price: "", discount: "", coupon: "", note: "Discover something special from the Cafe-Creme kitchen." };
+  const festivalSymbol = currentFestival.id === "holi" ? String.fromCodePoint(0x25cf) : currentFestival.id === "valentines-day" ? String.fromCodePoint(0x2665) : String.fromCodePoint(0x2726);
+  const dismissKey = `cafe-creme-festival-dismissed-${currentFestival.id}`;
+  const dismissed = sessionStorage.getItem(dismissKey) === "true";
+  if (!dismissed) {
+    const endDate = new Date(`${currentFestival.end}T23:59:59+05:30`);
+    festivalBanner.innerHTML = `<button class="festival-dismiss" type="button" aria-label="Dismiss festival offer">×</button><div class="festival-art" aria-hidden="true">${festivalSymbol}</div><div class="festival-copy"><p class="festival-eyebrow">${currentFestival.eyebrow}</p><h2>${currentFestival.title}</h2><p>${currentFestival.message}</p><div class="festival-offer"><strong>${campaign.offer}</strong>${campaign.price ? `<span>${festivalCurrency(campaign.price)} · ${campaign.discount}</span>` : ""}<small>${campaign.note}</small></div><div class="festival-actions"><a class="btn btn-dark" href="${currentFestival.actionUrl}">${currentFestival.action}</a>${campaign.coupon ? `<span class="festival-coupon">Use ${campaign.coupon}</span>` : ""}<small class="festival-countdown" data-end="${endDate.toISOString()}"></small></div><small class="festival-tradition">${currentFestival.tradition}</small></div><div class="festival-name">${currentFestival.name}</div>`;
+    festivalBanner.querySelector(".festival-dismiss").textContent = String.fromCodePoint(0x00d7);
+    const offerPrice = festivalBanner.querySelector(".festival-offer span");
+    if (offerPrice) offerPrice.textContent = `${festivalCurrency(campaign.price)} ${String.fromCodePoint(0x00b7)} ${campaign.discount}`;
+    festivalBanner.querySelector(".festival-dismiss").addEventListener("click", () => { sessionStorage.setItem(dismissKey, "true"); festivalBanner.remove(); });
+    const countdown = festivalBanner.querySelector(".festival-countdown");
+    const updateCountdown = () => { const remaining = Math.max(0, endDate - new Date()); const days = Math.floor(remaining / 86400000); const hours = Math.floor((remaining % 86400000) / 3600000); countdown.textContent = remaining ? `Offer ends in ${days}d ${hours}h` : "Offer ends today"; };
+    updateCountdown(); window.setInterval(updateCountdown, 60000);
+  } else festivalBanner.classList.add("d-none");
 }

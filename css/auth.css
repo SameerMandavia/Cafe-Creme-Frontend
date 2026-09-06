@@ -9,7 +9,10 @@
     padding: 2.5rem;
     background: #ffffff;
     border: 1px solid #eadbca;
+    border-radius: var(--radius-lg);
+    box-shadow: var(--shadow-lift);
 }
+.auth-shell .form-control { min-height: 48px; }
 
 .auth-shell h1,
 .admin-heading h1,

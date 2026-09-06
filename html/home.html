@@ -4,12 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Home | Cafe-Creme</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
     <link rel="stylesheet" href="../css/common.css" />
     <link rel="stylesheet" href="../css/home.css" />
     <link rel="stylesheet" href="../css/festival.css" />
@@ -19,116 +14,52 @@
     <main>
       <section class="cafe-hero">
         <div class="container cafe-hero-content">
-          <p class="cafe-eyebrow">Freshly brewed. Lovingly made.</p>
+          <div class="hero-copy-column"><p class="cafe-eyebrow">Cafe-Creme delivers</p>
           <div class="cafe-live-context" aria-live="polite">
-            <span id="time-greeting">Welcome to Cafe-Creme</span>
-            <span id="local-date"></span>
-            <span id="cafe-status"></span>
+            <span id="time-greeting">Welcome to Cafe-Creme</span><span id="local-date"></span><span id="cafe-status"></span>
           </div>
-          <h1>Your daily cup of comfort.</h1>
-          <p class="cafe-hero-copy">
-            Welcome to Cafe-Creme, a warm neighbourhood cafe serving thoughtful
-            coffee, homemade pastries, and good moments all day long.
-          </p>
-          <div class="cafe-hero-actions">
-            <a class="btn btn-light" href="menu.html">Explore the menu</a>
-            <a class="btn btn-outline-light" href="reservations.html"
-              >Reserve a table</a
-            >
-          </div>
+          <div class="hero-location"><span aria-hidden="true">⌖</span><div><small>Delivering to</small><strong id="home-location-label">Your location</strong></div><a href="cart.html#delivery-fields">Change</a></div>
+          <h1>Fresh coffee. Warm bakes. Delivered beautifully.</h1>
+          <p class="cafe-hero-copy">Specialty coffee, fresh bakes, and satisfying cafe meals — ready for pickup or delivery when the craving hits.</p>
+          <form class="hero-address-search" id="hero-address-form"><span aria-hidden="true">⌖</span><input id="hero-address-input" type="text" placeholder="Enter your delivery location" autocomplete="street-address" /><button type="submit">Find food</button></form>
+          <div id="home-order-tracker" class="home-order-tracker d-none" aria-live="polite"><span class="home-tracker-icon">●</span><div><small>Track your order</small><strong id="home-tracker-status">Order received</strong><span id="home-tracker-meta">ETA 25–35 min</span></div><a href="orders.html" id="home-tracker-link">Track now <span aria-hidden="true">→</span></a></div>
+          <div class="cafe-hero-actions"><a class="btn btn-light" href="menu.html">Order now</a><a class="btn btn-outline-light" href="menu.html#categories">Browse menu</a></div>
+          <div class="hero-trust-list" aria-label="Cafe delivery benefits"><span>25–35 min delivery</span><span>4.8 customer rating</span><span>Pickup available</span></div></div>
+          <div class="hero-visual" aria-label="Cafe-Creme delivery highlights"><div class="hero-image-frame"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=85" alt="Fresh latte on a cafe table" /><span class="hero-image-stamp">Made fresh<br /><strong>for your pause</strong></span></div><div class="hero-floating-card"><span class="hero-floating-icon">✓</span><div><strong>Freshly prepared</strong><small>Delivered with care</small></div></div></div>
+        </div>
+      </section>
+
+      <section class="container quick-order-section" aria-labelledby="quick-order-title">
+        <div class="section-heading quick-order-heading"><div><p class="cafe-eyebrow">Order your way</p><h2 id="quick-order-title">Find your next favourite</h2></div><a class="section-link" href="menu.html">See all items</a></div>
+        <div class="quick-order-grid">
+          <a class="quick-order-card" href="menu.html"><img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80" alt="Freshly made coffee" /><span>Chai &amp; coffee</span></a>
+          <a class="quick-order-card" href="menu.html"><img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" alt="Fresh pastries" /><span>Fresh bakes</span></a>
+          <a class="quick-order-card" href="menu.html"><img src="https://images.unsplash.com/photo-1513558161293-cdaf765ed2fd?auto=format&fit=crop&w=600&q=80" alt="Cold coffee drink" /><span>Cold drinks</span></a>
+          <a class="quick-order-card" href="menu.html"><img src="https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=600&q=80" alt="Dessert on a plate" /><span>Something sweet</span></a>
         </div>
       </section>
 
       <section id="festival-banner" class="container festival-banner d-none" aria-live="polite"></section>
 
+      <section class="container tracking-explainer" aria-labelledby="tracking-title"><div><p class="cafe-eyebrow">From our kitchen to you</p><h2 id="tracking-title">Know where your order is, every step of the way.</h2></div><div class="tracking-steps"><div><b>1</b><strong>We accept</strong><span>Your order is confirmed.</span></div><div><b>2</b><strong>We prepare</strong><span>Freshly made in our kitchen.</span></div><div><b>3</b><strong>We deliver</strong><span>Follow it until it reaches you.</span></div></div></section>
+
       <section class="container cafe-section">
-        <div class="section-heading">
-          <div>
-            <p class="cafe-eyebrow">Made for your ritual</p>
-            <h2>Favourites worth returning for</h2>
-          </div>
-          <a class="section-link" href="menu.html">View full menu</a>
-        </div>
-
+        <div class="section-heading"><div><p class="cafe-eyebrow">Made for your ritual</p><h2>Favourites worth returning for</h2></div><a class="section-link" href="menu.html">View full menu</a></div>
         <div class="row g-4">
-          <div class="col-md-4">
-            <article class="card feature-card h-100">
-              <img
-                class="card-img-top"
-                src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80"
-                alt="Latte in a ceramic cup"
-              />
-              <div class="feature-card-body">
-                <p class="card-kicker">Coffee</p>
-                <h3 class="card-title">Velvet Latte</h3>
-                <p>
-                  Silky steamed milk balanced with our smooth house espresso.
-                </p>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-4">
-            <article class="card feature-card h-100">
-              <img
-                class="card-img-top"
-                src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80"
-                alt="Freshly baked croissants"
-              />
-              <div class="feature-card-body">
-                <p class="card-kicker">Bakery</p>
-                <h3 class="card-title">Morning Bakes</h3>
-                <p>
-                  Flaky, golden pastries baked fresh each morning in small
-                  batches.
-                </p>
-              </div>
-            </article>
-          </div>
-          <div class="col-md-4">
-            <article class="card feature-card h-100">
-              <img
-                class="card-img-top"
-                src="https://images.unsplash.com/photo-1515823064-d6e0c04616a7?auto=format&fit=crop&w=900&q=80"
-                alt="Iced coffee on a cafe table"
-              />
-              <div class="feature-card-body">
-                <p class="card-kicker">Seasonal</p>
-                <h3 class="card-title">Cold Brew</h3>
-                <p>
-                  Slow-steeped, bright, and refreshing for an easy afternoon
-                  pick-me-up.
-                </p>
-              </div>
-            </article>
-          </div>
+          <div class="col-md-4"><article class="card feature-card h-100"><img class="card-img-top" src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=80" alt="Latte in a ceramic cup" /><div class="feature-card-body"><p class="card-kicker">Coffee</p><h3 class="card-title">Velvet Latte</h3><p>Silky steamed milk balanced with our smooth house espresso.</p><a href="menu.html" class="feature-card-link">Add to order</a></div></article></div>
+          <div class="col-md-4"><article class="card feature-card h-100"><img class="card-img-top" src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=900&q=80" alt="Freshly baked croissants" /><div class="feature-card-body"><p class="card-kicker">Bakery</p><h3 class="card-title">Morning Bakes</h3><p>Flaky, golden pastries baked fresh each morning in small batches.</p><a href="menu.html" class="feature-card-link">Add to order</a></div></article></div>
+          <div class="col-md-4"><article class="card feature-card h-100"><img class="card-img-top" src="https://images.unsplash.com/photo-1515823064-d6e0c04616a7?auto=format&fit=crop&w=900&q=80" alt="Iced coffee on a cafe table" /><div class="feature-card-body"><p class="card-kicker">Seasonal</p><h3 class="card-title">Cold Brew</h3><p>Slow-steeped, bright, and refreshing for an easy afternoon pick-me-up.</p><a href="menu.html" class="feature-card-link">Add to order</a></div></article></div>
         </div>
       </section>
 
-      <section class="cafe-story">
-        <div class="container cafe-story-grid">
-          <div>
-            <p class="cafe-eyebrow">A place to pause</p>
-            <h2>Good coffee, familiar faces, and room to stay awhile.</h2>
-          </div>
-          <div>
-            <p>
-              Whether you are meeting a friend, opening your laptop, or taking
-              five quiet minutes for yourself, Cafe-Creme is here to make the
-              ordinary feel special.
-            </p>
-            <a class="btn btn-dark" href="about.html">Our story</a>
-          </div>
-        </div>
-      </section>
+      <section class="container"><div class="home-offer"><div><p class="cafe-eyebrow">Cafe-Creme rewards</p><h2>Make your next coffee a little more rewarding.</h2><p>Discover seasonal offers and thoughtful pairings made for slow mornings and busy afternoons.</p><a class="btn btn-light" href="offers.html">Explore offers</a></div><p class="offer-mark" aria-hidden="true">CC</p></div></section>
+
+      <section class="container review-section" aria-labelledby="reviews-title"><div class="section-heading"><div><p class="cafe-eyebrow">Loved locally</p><h2 id="reviews-title">The little rituals people return for.</h2></div><span class="review-score">★ 4.8 <small>from 2,000+ orders</small></span></div><div class="row g-3"><div class="col-md-4"><blockquote class="review-card"><div>★★★★★</div><p>“The filter coffee arrived hot, fragrant, and exactly what my afternoon needed.”</p><cite>— Aanya, Bengaluru</cite></blockquote></div><div class="col-md-4"><blockquote class="review-card"><div>★★★★★</div><p>“The croissant was flaky and the delivery updates made the whole order easy.”</p><cite>— Rohan, Pune</cite></blockquote></div><div class="col-md-4"><blockquote class="review-card"><div>★★★★★</div><p>“A lovely cafe experience at home. I keep coming back for the saffron cake.”</p><cite>— Meera, Mumbai</cite></blockquote></div></div></section>
+
+      <section class="cafe-story"><div class="container cafe-story-grid"><div><p class="cafe-eyebrow">A place to pause</p><h2>Good coffee, familiar faces, and room to stay awhile.</h2></div><div><p>Whether you are meeting a friend, opening your laptop, or taking five quiet minutes for yourself, Cafe-Creme is here to make the ordinary feel special.</p><a class="btn btn-dark" href="about.html">Our story</a></div></div></section>
     </main>
     <div id="site-footer"></div>
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-    <script src="../javascript/layout.js"></script>
-    <script src="../javascript/home.js"></script>
-    <script src="../javascript/festival.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="../javascript/layout.js"></script><script src="../javascript/home.js"></script><script src="../javascript/festival.js"></script>
   </body>
 </html>

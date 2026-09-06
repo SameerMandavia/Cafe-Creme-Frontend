@@ -20,6 +20,7 @@
 
 .admin-stat {
     background: #ffffff;
+    border: 1px solid var(--border) !important;
 }
 
 .admin-stat .card-body {
@@ -67,6 +68,18 @@
 .admin-table-shell td:last-child,
 .admin-table-shell th:last-child {
     text-align: right;
+}
+
+.admin-card {
+    border: 1px solid var(--border) !important;
+    box-shadow: 0 0.6rem 1.5rem rgba(74, 44, 36, 0.06);
+}
+
+.message-preview {
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 @media (max-width: 767px) {
