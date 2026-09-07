@@ -312,18 +312,136 @@ const festivalCalendar = [
     art: "✦",
     action: "Reserve a table",
     actionUrl: "reservations.html"
+  },
+  {
+    id: "new-year",
+    start: "2026-01-01", end: "2026-01-03", name: "New Year", tradition: "National celebration",
+    eyebrow: "A fresh start", title: "Begin the year around a warm table", message: "Raise a cup to new rituals, good company, and bright beginnings.", art: "*", action: "Order a celebration box", actionUrl: "menu.html"
+  },
+  {
+    id: "republic-day",
+    start: "2026-01-26", end: "2026-01-27", name: "Republic Day", tradition: "Indian national occasion",
+    eyebrow: "Pride and togetherness", title: "A table for every India", message: "Celebrate the spirit of India with familiar flavours and good company.", art: "*", action: "Explore the menu", actionUrl: "menu.html"
+  },
+  {
+    id: "ugadi",
+    start: "2026-03-19", end: "2026-03-20", name: "Ugadi", tradition: "Kannada and Telugu New Year",
+    eyebrow: "A new season begins", title: "Welcome the year with sweetness", message: "Share a hopeful new beginning with a warm cup and something freshly baked.", art: "*", action: "Explore festive picks", actionUrl: "menu.html"
+  },
+  {
+    id: "gudi-padwa",
+    start: "2026-03-19", end: "2026-03-20", name: "Gudi Padwa", tradition: "Maharashtrian and Konkani New Year",
+    eyebrow: "A bright new beginning", title: "Celebrate a year of abundance", message: "Gather with family, festive sweetness, and a little Cafe-Creme comfort.", art: "*", action: "Explore festive picks", actionUrl: "menu.html"
+  },
+  {
+    id: "ram-navami",
+    start: "2026-03-27", end: "2026-03-28", name: "Ram Navami", tradition: "Hindu tradition",
+    eyebrow: "A day of devotion", title: "A peaceful table to share", message: "Mark the occasion with warmth, hospitality, and mindful moments together.", art: "*", action: "Plan your table", actionUrl: "reservations.html"
+  },
+  {
+    id: "tamil-new-year",
+    start: "2026-04-14", end: "2026-04-15", name: "Tamil New Year", tradition: "Tamil New Year celebration",
+    eyebrow: "Puthandu vazhthukkal", title: "A sweet start to the year", message: "Welcome Puthandu with a generous table, fresh bakes, and a comforting cup.", art: "*", action: "Explore the menu", actionUrl: "menu.html"
+  },
+  {
+    id: "vishu",
+    start: "2026-04-14", end: "2026-04-15", name: "Vishu", tradition: "Malayali New Year celebration",
+    eyebrow: "Vishu wishes", title: "A bright beginning", message: "Celebrate the season with gratitude, sweetness, and time with loved ones.", art: "*", action: "Explore the menu", actionUrl: "menu.html"
+  },
+  {
+    id: "bihu",
+    start: "2026-04-14", end: "2026-04-15", name: "Bohag Bihu", tradition: "Assamese harvest celebration",
+    eyebrow: "New season, new energy", title: "Celebrate the harvest together", message: "A warm welcome to spring, community, and generous sharing.", art: "*", action: "Explore festive picks", actionUrl: "menu.html"
+  },
+  {
+    id: "akshaya-tritiya",
+    start: "2026-04-19", end: "2026-04-20", name: "Akshaya Tritiya", tradition: "Hindu and Jain tradition",
+    eyebrow: "Auspicious beginnings", title: "Make room for something good", message: "Share a sweet moment and start a new ritual with Cafe-Creme.", art: "*", action: "View festive offers", actionUrl: "offers.html"
+  },
+  {
+    id: "independence-day",
+    start: "2026-08-15", end: "2026-08-16", name: "Independence Day", tradition: "Indian national occasion",
+    eyebrow: "Pride in every place", title: "Flavours that bring us together", message: "Celebrate the colours, stories, and shared spirit of India.", art: "*", action: "Explore the menu", actionUrl: "menu.html"
+  },
+  {
+    id: "raksha-bandhan",
+    start: "2026-08-28", end: "2026-08-29", name: "Raksha Bandhan", tradition: "Hindu and regional tradition",
+    eyebrow: "Made for the people who know you best", title: "Share a little sweetness", message: "Celebrate sibling bonds with a thoughtful coffee, bake, or gift box.", art: "*", action: "Send a gift", actionUrl: "menu.html"
+  },
+  {
+    id: "teachers-day",
+    start: "2026-09-05", end: "2026-09-06", name: "Teachers' Day", tradition: "Indian appreciation occasion",
+    eyebrow: "For the ones who guide us", title: "Say thank you over coffee", message: "Make a teacher's day with a warm cup and a thoughtful treat.", art: "*", action: "Explore gift picks", actionUrl: "menu.html"
+  },
+  {
+    id: "dussehra",
+    start: "2026-10-20", end: "2026-10-21", name: "Dussehra", tradition: "Hindu and regional tradition",
+    eyebrow: "A hopeful victory", title: "Gather around something good", message: "Celebrate courage, renewal, and the people who make every day brighter.", art: "*", action: "Explore the menu", actionUrl: "menu.html"
+  },
+  {
+    id: "karwa-chauth",
+    start: "2026-10-29", end: "2026-10-30", name: "Karwa Chauth", tradition: "Hindu and regional tradition",
+    eyebrow: "Made for togetherness", title: "A thoughtful table for two", message: "Plan a warm evening with coffee, sweetness, and a little time together.", art: "*", action: "Reserve a table", actionUrl: "reservations.html"
+  },
+  {
+    id: "dhanteras",
+    start: "2026-11-06", end: "2026-11-07", name: "Dhanteras", tradition: "Hindu, Jain, and regional tradition",
+    eyebrow: "A little more light", title: "Begin the festive week", message: "Welcome prosperity with glowing tables, festive bakes, and good company.", art: "*", action: "View festive offers", actionUrl: "offers.html"
+  },
+  {
+    id: "bhai-dooj",
+    start: "2026-11-11", end: "2026-11-12", name: "Bhai Dooj", tradition: "Hindu and regional tradition",
+    eyebrow: "For the bond that lasts", title: "One more sweet moment together", message: "Share a coffee, a bake, and a memory with your sibling.", art: "*", action: "Order a gift", actionUrl: "menu.html"
+  },
+  {
+    id: "childrens-day",
+    start: "2026-11-14", end: "2026-11-15", name: "Children's Day", tradition: "Indian appreciation occasion",
+    eyebrow: "Small joys, big smiles", title: "Make room for a little fun", message: "Celebrate the children in your life with playful treats and a welcoming table.", art: "*", action: "See sweet treats", actionUrl: "menu.html"
+  },
+  {
+    id: "womens-day",
+    start: "2026-03-08", end: "2026-03-09", name: "International Women's Day", tradition: "Global appreciation occasion",
+    eyebrow: "Celebrating everyday strength", title: "Make time for the women you love", message: "Gather over coffee, conversation, and a table made for meaningful moments.", art: "*", action: "Reserve a table", actionUrl: "reservations.html"
+  },
+  {
+    id: "mothers-day",
+    start: "2026-05-10", end: "2026-05-11", name: "Mother's Day", tradition: "Contemporary celebration",
+    eyebrow: "For the heart of every home", title: "Give her a slower morning", message: "Send a thoughtful breakfast box or bring her in for coffee and cake.", art: "*", action: "Send a gift", actionUrl: "menu.html"
+  },
+  {
+    id: "fathers-day",
+    start: "2026-06-21", end: "2026-06-22", name: "Father's Day", tradition: "Contemporary celebration",
+    eyebrow: "For the one who is always there", title: "Coffee, cake, and a proper thank you", message: "Celebrate Dad with his favourite cup and a little time together.", art: "*", action: "Explore gift picks", actionUrl: "menu.html"
+  },
+  {
+    id: "friendship-day",
+    start: "2026-08-02", end: "2026-08-03", name: "Friendship Day", tradition: "Contemporary celebration",
+    eyebrow: "Better together", title: "Bring your people to the table", message: "Share a round of favourites and make space for the stories that keep you close.", art: "*", action: "Plan your table", actionUrl: "reservations.html"
+  },
+  {
+    id: "govardhan-puja",
+    start: "2026-11-11", end: "2026-11-12", name: "Govardhan Puja", tradition: "Hindu and regional tradition",
+    eyebrow: "Gratitude and abundance", title: "A generous table for sharing", message: "Continue the festive spirit with comforting flavours and warm hospitality.", art: "*", action: "Explore festive picks", actionUrl: "menu.html"
+  },
+  {
+    id: "chhath-puja",
+    start: "2026-11-13", end: "2026-11-17", name: "Chhath Puja", tradition: "Bihar, Jharkhand, eastern Uttar Pradesh, and regional tradition",
+    eyebrow: "Gratitude to the sun", title: "A peaceful moment of togetherness", message: "Wishing our community a meaningful Chhath filled with faith, gratitude, and family.", art: "*", action: "Explore the menu", actionUrl: "menu.html"
+  },
+  {
+    id: "muharram",
+    start: "2026-06-17", end: "2026-06-27", name: "Muharram", tradition: "Muslim tradition",
+    eyebrow: "A time for reflection", title: "A peaceful place to pause", message: "Wishing our community a meaningful period of reflection, remembrance, and togetherness.", art: "*", action: "Plan your table", actionUrl: "reservations.html"
+  },
+  {
+    id: "milad-un-nabi",
+    start: "2026-08-25", end: "2026-08-27", name: "Milad-un-Nabi", tradition: "Muslim tradition",
+    eyebrow: "Peace and goodwill", title: "Gather with kindness", message: "Wishing our community peace, generosity, and warm moments shared together.", art: "*", action: "Explore the menu", actionUrl: "menu.html"
   }
 ];
 
 function getCurrentFestival() {
   const today = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Kolkata" }).format(new Date());
-  const adminSetting = JSON.parse(localStorage.getItem("cafe-creme-active-festival") || "null");
-  if (adminSetting && Object.prototype.hasOwnProperty.call(adminSetting, "enabled")) {
-    if (!adminSetting.enabled || !adminSetting.festivalId) return null;
-    const schedule = adminSetting.schedule;
-    if (schedule?.enabled && (!schedule.start || !schedule.end || today < schedule.start || today > schedule.end)) return null;
-    return festivalCalendar.find((festival) => festival.id === adminSetting.festivalId) || null;
-  }
   const previewFestival = new URLSearchParams(window.location.search).get("festival");
   const previewKey = "cafe-creme-festival-preview";
   if (previewFestival === "none") {
@@ -332,8 +450,17 @@ function getCurrentFestival() {
   }
   if (previewFestival) {
     const selectedFestival = festivalCalendar.find((festival) => festival.id === previewFestival);
-    if (selectedFestival) sessionStorage.setItem(previewKey, selectedFestival.id);
-    return selectedFestival;
+    if (selectedFestival) {
+      sessionStorage.setItem(previewKey, selectedFestival.id);
+      return selectedFestival;
+    }
+  }
+  const adminSetting = JSON.parse(localStorage.getItem("cafe-creme-active-festival") || "null");
+  if (adminSetting && Object.prototype.hasOwnProperty.call(adminSetting, "enabled")) {
+    if (!adminSetting.enabled || !adminSetting.festivalId) return null;
+    const schedule = adminSetting.schedule;
+    if (schedule?.enabled && (!schedule.start || !schedule.end || today < schedule.start || today > schedule.end)) return null;
+    return festivalCalendar.find((festival) => festival.id === adminSetting.festivalId) || null;
   }
   const savedPreview = sessionStorage.getItem(previewKey);
   if (savedPreview) return festivalCalendar.find((festival) => festival.id === savedPreview) || null;
@@ -353,20 +480,31 @@ const festivalThemes = {
   parsi: { coffee: "#1e4661", cream: "#f7fbfc", peach: "#d5ae4d", caramel: "#ad702b", cardamom: "#4d766d", surface: "#ffffff", border: "#c7dbe1" },
   rose: { coffee: "#612b38", cream: "#fff5f4", peach: "#e7a0a9", caramel: "#a9354d", cardamom: "#66705a", surface: "#fffafb", border: "#e7b8bd" },
   harvest: { coffee: "#5a3423", cream: "#fff8e7", peach: "#e6ad62", caramel: "#b8572d", cardamom: "#5d704d", surface: "#fffdf7", border: "#e3c18d" },
-  spring: { coffee: "#54302a", cream: "#fff7eb", peach: "#f0ae72", caramel: "#bd4b43", cardamom: "#58704f", surface: "#fffdf8", border: "#e5b69a" }
+  spring: { coffee: "#54302a", cream: "#fff7eb", peach: "#f0ae72", caramel: "#bd4b43", cardamom: "#58704f", surface: "#fffdf8", border: "#e5b69a" },
+  diya: { coffee: "#30254f", cream: "#fff8e8", peach: "#e5b84f", caramel: "#c15b2d", cardamom: "#49604b", surface: "#fffdf5", border: "#dfbd68" },
+  holi: { coffee: "#442448", cream: "#fff8f1", peach: "#f1b447", caramel: "#d84d65", cardamom: "#36716b", surface: "#fffdf9", border: "#e5a4ad" },
+  navratri: { coffee: "#3c204e", cream: "#fff7ed", peach: "#d89a3b", caramel: "#a93650", cardamom: "#3f6659", surface: "#fffdf8", border: "#d9a3a9" },
+  peacock: { coffee: "#123f52", cream: "#f5fbf4", peach: "#e5ba52", caramel: "#bd7530", cardamom: "#327169", surface: "#fcfdf8", border: "#b9d9c9" },
+  shiva: { coffee: "#202d50", cream: "#f6f8fc", peach: "#aab9d4", caramel: "#65789e", cardamom: "#4e756e", surface: "#ffffff", border: "#c5d0e2" },
+  ram: { coffee: "#5a2d22", cream: "#fff8e9", peach: "#e4ac4b", caramel: "#bd542b", cardamom: "#56704b", surface: "#fffdf7", border: "#e1bd7c" },
+  rangoli: { coffee: "#401e45", cream: "#fff8f1", peach: "#e9a53f", caramel: "#c94d54", cardamom: "#47715e", surface: "#fffdf8", border: "#dda5af" },
+  rakhi: { coffee: "#512d49", cream: "#fff7f7", peach: "#e5a0a5", caramel: "#b64b68", cardamom: "#657251", surface: "#fffafd", border: "#e4b8c4" },
+  sunrise: { coffee: "#25465b", cream: "#fff9ed", peach: "#efa75d", caramel: "#cd6334", cardamom: "#4b7264", surface: "#fffdf8", border: "#e6bd94" },
+  pongal: { coffee: "#4a3020", cream: "#fff9e8", peach: "#e2b64e", caramel: "#b9682e", cardamom: "#58704b", surface: "#fffdf7", border: "#e1c27f" },
+  onam: { coffee: "#285348", cream: "#fffdf0", peach: "#e2bd67", caramel: "#bd7934", cardamom: "#4c795a", surface: "#fffef9", border: "#cbd9b0" }
 };
 
 const festivalThemeNames = {
   "valentines-day": "rose",
-  "diwali": "saffron",
-  holi: "spring",
-  navratri: "saffron",
-  "ganesh-chaturthi": "saffron",
+  "diwali": "diya",
+  holi: "holi",
+  navratri: "navratri",
+  "ganesh-chaturthi": "diya",
   lohri: "harvest",
   "makar-sankranti": "harvest",
-  pongal: "harvest",
+  pongal: "pongal",
   "vasant-panchami": "saffron",
-  "maha-shivratri": "saffron",
+  "maha-shivratri": "shiva",
   ramadan: "muslim",
   "eid-al-fitr": "muslim",
   "eid-al-adha": "muslim",
@@ -377,10 +515,35 @@ const festivalThemeNames = {
   "buddha-purnima": "buddhist",
   "rath-yatra": "saffron",
   "parsi-new-year": "parsi",
-  onam: "harvest",
-  janmashtami: "saffron",
+  onam: "onam",
+  janmashtami: "peacock",
   "guru-nanak-gurpurab": "sikh",
-  christmas: "christian"
+  christmas: "christian",
+  "new-year": "spring",
+  "republic-day": "saffron",
+  "ugadi": "rangoli",
+  "gudi-padwa": "rangoli",
+  "ram-navami": "ram",
+  "tamil-new-year": "harvest",
+  vishu: "harvest",
+  bihu: "harvest",
+  "akshaya-tritiya": "diya",
+  "independence-day": "saffron",
+  "raksha-bandhan": "rakhi",
+  "teachers-day": "spring",
+  "dussehra": "rangoli",
+  "karwa-chauth": "rose",
+  "dhanteras": "diya",
+  "bhai-dooj": "rose",
+  "childrens-day": "spring",
+  "womens-day": "rose",
+  "mothers-day": "rose",
+  "fathers-day": "spring",
+  "friendship-day": "rose",
+  "govardhan-puja": "saffron",
+  "chhath-puja": "sunrise",
+  "muharram": "muslim",
+  "milad-un-nabi": "muslim"
 };
 
 const festivalPriority = {
@@ -400,6 +563,7 @@ function applyFestivalThemeVariables(festival) {
   document.body.classList.remove(...festivalClasses);
   if (!festival) {
     document.body.removeAttribute("data-festival");
+    ["--festival-surface", "--festival-border", "--festival-accent"].forEach((name) => document.body.style.removeProperty(name));
     Object.entries(festivalThemes.default).forEach(([name, value]) => document.body.style.setProperty(`--${name}`, value));
     return;
   }
@@ -407,6 +571,9 @@ function applyFestivalThemeVariables(festival) {
   document.body.dataset.festival = festival.id;
   const theme = festivalThemes[festivalThemeNames[festival.id] || "default"];
   Object.entries(theme).forEach(([name, value]) => document.body.style.setProperty(`--${name}`, value));
+  document.body.style.setProperty("--festival-surface", theme.peach);
+  document.body.style.setProperty("--festival-border", theme.caramel);
+  document.body.style.setProperty("--festival-accent", theme.caramel);
 }
 
 const currentFestival = getCurrentFestival();
@@ -448,8 +615,8 @@ const festivalCurrency = (amount) => `${String.fromCodePoint(0x20B9)}${amount}`;
 const savedFestivalCampaigns = JSON.parse(localStorage.getItem("cafe-creme-festival-campaigns") || "{}");
 Object.entries(savedFestivalCampaigns).forEach(([id, value]) => {
   if (Array.isArray(value)) {
-    const [offer, price, discount, coupon, note] = value;
-    savedFestivalCampaigns[id] = { offer: offer || "Seasonal Cafe Special", price: price || "", discount: discount || "", coupon: coupon || "", note: note || "Discover something special from the Cafe-Creme kitchen." };
+    const [offer, price, discount, coupon, note, heroImage, heroAlt] = value;
+    savedFestivalCampaigns[id] = { offer: offer || "Seasonal Cafe Special", price: price || "", discount: discount || "", coupon: coupon || "", note: note || "Discover something special from the Cafe-Creme kitchen.", heroImage: heroImage || "", heroAlt: heroAlt || "Festive Cafe-Creme special" };
   }
 });
 Object.assign(festivalCampaigns, savedFestivalCampaigns);
@@ -462,6 +629,49 @@ Object.values(festivalCampaigns).forEach((campaign) => {
 });
 window.festivalCampaigns = festivalCampaigns;
 
+const festivalSpecials = document.querySelector("#festival-specials");
+const festivalVisualImages = {
+  christmas: "https://images.unsplash.com/photo-1481391032119-d89fee407e44?auto=format&fit=crop&w=900&q=85",
+  diwali: "https://images.unsplash.com/photo-1601050690597-df0568f70950?auto=format&fit=crop&w=900&q=85",
+  holi: "https://images.unsplash.com/photo-1585937421612-70a008356fbe?auto=format&fit=crop&w=900&q=85",
+  "valentines-day": "https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=900&q=85",
+  "ganesh-chaturthi": "https://images.unsplash.com/photo-1606293926075-69a00dbfde81?auto=format&fit=crop&w=900&q=85"
+};
+const celebrationImage = "https://images.unsplash.com/photo-1519671482749-fd09be7ccebf?auto=format&fit=crop&w=900&q=85";
+[
+  "lohri", "makar-sankranti", "pongal", "vasant-panchami", "maha-shivratri", "ramadan", "eid-al-fitr", "mahavir-jayanti", "good-friday", "easter", "baisakhi", "buddha-purnima", "eid-al-adha", "rath-yatra", "parsi-new-year", "onam", "janmashtami", "guru-nanak-gurpurab", "new-year", "republic-day", "ugadi", "gudi-padwa", "ram-navami", "tamil-new-year", "vishu", "bihu", "akshaya-tritiya", "independence-day", "raksha-bandhan", "teachers-day", "dussehra", "karwa-chauth", "dhanteras", "bhai-dooj", "childrens-day", "womens-day", "mothers-day", "fathers-day", "friendship-day", "govardhan-puja", "chhath-puja"
+  , "muharram", "milad-un-nabi"
+].forEach((id) => { festivalVisualImages[id] = celebrationImage; });
+const festivalSpecialItems = {
+  "ganesh-chaturthi": [
+    { id: "filter-coffee", name: "Festive Filter Coffee", note: "Smooth coffee for a warm gathering.", price: 160, image: "https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=600&q=80" },
+    { id: "cardamom-bun", name: "Cardamom Sharing Bun", note: "Soft, fragrant, and made to share.", price: 150, image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" },
+    { id: "saffron-milk-cake", name: "Saffron Milk Cake", note: "A golden sweet finish with pistachio.", price: 220, image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80" }
+  ],
+  diwali: [
+    { id: "velvet-latte", name: "Diwali Velvet Latte", note: "Silky espresso for glowing evenings.", price: 190, image: "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=600&q=80" },
+    { id: "saffron-milk-cake", name: "Saffron Milk Cake", note: "A festive bakery favourite.", price: 220, image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80" },
+    { id: "butter-croissant", name: "Golden Bake Box", note: "Freshly baked treats for the table.", price: 180, image: "https://images.unsplash.com/photo-1555507036-ab1f4038808a?auto=format&fit=crop&w=600&q=80" }
+  ],
+  holi: [
+    { id: "ginger-honey-tea", name: "Ginger Honey Cooler", note: "Bright, refreshing, and lightly sweet.", price: 140, image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80" },
+    { id: "chocolate-brownie", name: "Colourful Brownie Pair", note: "Playful sweetness for sharing.", price: 170, image: "https://images.unsplash.com/photo-1606313564200-e75d5e30476c?auto=format&fit=crop&w=600&q=80" }
+  ]
+};
+
+function renderFestivalSpecials() {
+  if (!festivalSpecials || !currentFestival) return;
+  const campaign = festivalCampaigns[currentFestival.id] || {};
+  const items = festivalSpecialItems[currentFestival.id] || [
+    { id: "masala-chai", name: `${currentFestival.name} Masala Chai`, note: "A comforting cup for the occasion.", price: 120, image: "https://images.unsplash.com/photo-1544787219-7f47ccb76574?auto=format&fit=crop&w=600&q=80" },
+    { id: "cardamom-bun", name: "Cardamom Celebration Bun", note: "Freshly baked and gently spiced.", price: 150, image: "https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=600&q=80" },
+    { id: "saffron-milk-cake", name: "Saffron Milk Cake", note: "A soft, festive sweet to share.", price: 220, image: "https://images.unsplash.com/photo-1578985545062-69928b1d9587?auto=format&fit=crop&w=600&q=80" }
+  ];
+  festivalSpecials.classList.remove("d-none");
+  festivalSpecials.innerHTML = `<div class="festival-specials-heading"><div><p class="cafe-eyebrow">Only for a limited time</p><h2 id="festival-specials-title">${currentFestival.name} specials</h2><p>Small-batch favourites inspired by the season, prepared fresh at Cafe-Creme.</p></div><a class="section-link" href="menu.html">View full menu</a></div><div class="festival-specials-track">${items.map((item) => `<article class="festival-special-card"><img src="${item.image}" alt="${item.name}" loading="lazy" /><div><span class="festival-special-tag">Festive pick</span><h3>${item.name}</h3><p>${item.note}</p><strong>${festivalCurrency(item.price)}</strong><button class="btn btn-dark btn-sm festival-add-button" type="button" data-festival-item="${item.id}">Add to order</button></div></article>`).join("")}</div>${campaign.coupon ? `<p class="festival-specials-note">Save with <strong>${campaign.coupon}</strong> at checkout.</p>` : ""}`;
+  festivalSpecials.querySelectorAll(".festival-add-button").forEach((button) => button.addEventListener("click", () => { const cart = JSON.parse(localStorage.getItem("cafe-creme-cart") || "{}"); cart[button.dataset.festivalItem] = (cart[button.dataset.festivalItem] || 0) + 1; localStorage.setItem("cafe-creme-cart", JSON.stringify(cart)); button.textContent = "Added"; button.classList.add("is-added"); window.dispatchEvent(new StorageEvent("storage", { key: "cafe-creme-cart" })); }));
+}
+
 function safeFestivalArt(festival) {
   if (festival.art && !/[ÃÂâà]/.test(festival.art)) return festival.art;
   return { diwali: "✦", holi: "●", "valentines-day": "♥", christmas: "✦" }[festival.id] || "✦";
@@ -471,10 +681,20 @@ if (currentFestival && festivalBanner) {
   const campaign = festivalCampaigns[currentFestival.id] || { offer: "Seasonal Cafe Special", price: "", discount: "", coupon: "", note: "Discover something special from the Cafe-Creme kitchen." };
   const festivalSymbol = currentFestival.id === "holi" ? String.fromCodePoint(0x25cf) : currentFestival.id === "valentines-day" ? String.fromCodePoint(0x2665) : String.fromCodePoint(0x2726);
   const dismissKey = `cafe-creme-festival-dismissed-${currentFestival.id}`;
-  const dismissed = sessionStorage.getItem(dismissKey) === "true";
+  const isPreview = new URLSearchParams(window.location.search).has("festival");
+  const dismissed = !isPreview && sessionStorage.getItem(dismissKey) === "true";
   if (!dismissed) {
     const endDate = new Date(`${currentFestival.end}T23:59:59+05:30`);
     festivalBanner.innerHTML = `<button class="festival-dismiss" type="button" aria-label="Dismiss festival offer">×</button><div class="festival-art" aria-hidden="true">${festivalSymbol}</div><div class="festival-copy"><p class="festival-eyebrow">${currentFestival.eyebrow}</p><h2>${currentFestival.title}</h2><p>${currentFestival.message}</p><div class="festival-offer"><strong>${campaign.offer}</strong>${campaign.price ? `<span>${festivalCurrency(campaign.price)} · ${campaign.discount}</span>` : ""}<small>${campaign.note}</small></div><div class="festival-actions"><a class="btn btn-dark" href="${currentFestival.actionUrl}">${currentFestival.action}</a>${campaign.coupon ? `<span class="festival-coupon">Use ${campaign.coupon}</span>` : ""}<small class="festival-countdown" data-end="${endDate.toISOString()}"></small></div><small class="festival-tradition">${currentFestival.tradition}</small></div><div class="festival-name">${currentFestival.name}</div>`;
+    const festivalVisual = document.createElement("div");
+    festivalVisual.className = "festival-visual";
+    festivalVisual.innerHTML = `<div class="festival-visual-glow"></div><img src="${festivalVisualImages[currentFestival.id] || "https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=900&q=85"}" alt="Festive Cafe-Creme special" loading="eager" /><span class="festival-decoration festival-decoration-one">*</span><span class="festival-decoration festival-decoration-two">+</span>`;
+    if (campaign.heroImage) festivalVisual.querySelector("img").src = campaign.heroImage;
+    if (campaign.heroAlt) festivalVisual.querySelector("img").alt = campaign.heroAlt;
+    const festivalName = festivalBanner.querySelector(".festival-name");
+    if (festivalName) festivalVisual.appendChild(festivalName);
+    festivalBanner.appendChild(festivalVisual);
+    festivalBanner.classList.add("has-visual");
     festivalBanner.querySelector(".festival-dismiss").textContent = String.fromCodePoint(0x00d7);
     const offerPrice = festivalBanner.querySelector(".festival-offer span");
     if (offerPrice) offerPrice.textContent = `${festivalCurrency(campaign.price)} ${String.fromCodePoint(0x00b7)} ${campaign.discount}`;
@@ -484,3 +704,5 @@ if (currentFestival && festivalBanner) {
     updateCountdown(); window.setInterval(updateCountdown, 60000);
   } else festivalBanner.classList.add("d-none");
 }
+
+renderFestivalSpecials();

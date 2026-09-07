@@ -105,8 +105,16 @@
 .empty-orders h2 { color: var(--coffee); }
 .empty-orders p { color: var(--muted); }
 .orders-list { display: grid; gap: 1rem; max-width: 900px; }
+.orders-page-heading { display: flex; align-items: end; justify-content: space-between; gap: 2rem; }
+.orders-page-heading .page-intro { margin-bottom: 0; }
+.orders-overview { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0.75rem; max-width: 900px; margin: 0 0 2rem; }
+.orders-overview > div { display: grid; gap: 0.3rem; padding: 1rem 1.15rem; border: 1px solid var(--border); border-radius: var(--radius-md); background: var(--surface); }
+.orders-overview small { color: var(--muted); font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+.orders-overview strong { color: var(--coffee); font-family: "DM Serif Display", Georgia, serif; font-size: 1.6rem; font-weight: 400; }
 .orders-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 1rem; max-width: 900px; margin-bottom: 1.25rem; }
-.orders-toolbar > .form-control { max-width: 320px; }
+.orders-search-wrap { position: relative; display: flex; align-items: center; width: min(100%, 320px); }
+.orders-search-wrap > span { position: absolute; left: 0.85rem; z-index: 1; color: var(--caramel); font-size: 1.2rem; }
+.orders-search-wrap .form-control { padding-left: 2.25rem; }
 .orders-filters { display: flex; gap: 0.4rem; overflow-x: auto; }
 .order-filter { padding: 0.5rem 0.75rem; border: 1px solid var(--border); border-radius: 999px; background: var(--surface); color: var(--coffee); font-size: 0.78rem; font-weight: 800; white-space: nowrap; }
 .order-filter:hover, .order-filter.is-active { border-color: var(--coffee); background: var(--coffee); color: var(--cream); }
@@ -114,16 +122,41 @@
 .orders-no-results strong { color: var(--coffee); }
 .order-history-card { padding: 1.5rem; border: 1px solid var(--border); border-radius: var(--radius-lg); background: var(--surface); box-shadow: var(--shadow-soft); }
 .order-history-head { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
+.order-history-title { display: flex; align-items: center; gap: 0.8rem; }
+.order-history-title img { width: 64px; height: 64px; border-radius: 0.65rem; object-fit: cover; }
 .order-history-head h2 { margin: 0.25rem 0 0; color: var(--coffee); font-size: 1.25rem; }
-.order-history-head > strong { color: var(--caramel); font-size: 1.15rem; }
+.order-history-title small { color: var(--muted); font-size: 0.75rem; }
+.order-total-block { display: grid; justify-items: end; gap: 0.5rem; }
+.order-total-block > strong { color: var(--caramel); font-size: 1.15rem; }
+.status-pill { display: inline-flex; padding: 0.25rem 0.55rem; border-radius: 999px; background: #edf4e9; color: var(--cardamom); font-size: 0.65rem; font-weight: 800; white-space: nowrap; }
+.status-cancelled { background: #fae9e4; color: #a44b3c; }
 .order-history-id { color: var(--caramel); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.08em; }
 .order-history-meta, .order-history-items { color: var(--muted); font-size: 0.86rem; }
-.order-timeline { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.35rem; margin: 1.25rem 0; }
-.order-timeline span { display: grid; gap: 0.35rem; color: var(--muted); font-size: 0.68rem; text-align: center; }
-.order-timeline b { display: grid; width: 1.6rem; height: 1.6rem; margin: 0 auto; place-items: center; border-radius: 50%; background: var(--border); color: var(--coffee); font-size: 0.7rem; }
+.order-timeline { position: relative; display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin: 1.5rem 0; }
+.order-timeline::before { display: none; }
+.order-timeline span { position: relative; z-index: 1; display: grid; gap: 0.45rem; color: var(--muted); background: transparent; font-size: 0.68rem; text-align: center; }
+.order-timeline span::after { position: absolute; top: 0.75rem; left: 50%; width: 100%; height: 2px; background: var(--border); content: ""; z-index: -1; }
+.order-timeline span:last-child::after { display: none; }
 .order-timeline span.is-complete { color: var(--cardamom); font-weight: 800; }
-.order-timeline span.is-complete b { background: var(--cardamom); color: #fff; }
+.order-timeline span.is-complete::after { background: var(--cardamom); }
+.order-timeline b { display: grid; width: 1.7rem; height: 1.7rem; margin: 0 auto; place-items: center; border: 2px solid var(--border); border-radius: 50%; background: var(--surface); color: var(--coffee); font-size: 0.7rem; }
+.order-timeline span.is-complete b { border-color: var(--cardamom); background: var(--cardamom); color: #fff; }
+.order-timeline span.is-current { color: var(--caramel); }
+.order-timeline span.is-current b { border-color: var(--caramel); background: var(--surface); color: var(--caramel); box-shadow: 0 0 0 0.25rem rgba(197,106,45,0.16); }
+.order-timeline em { font-style: normal; white-space: nowrap; }
 .order-history-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+.order-history-actions .btn-link { padding-inline: 0.25rem; color: var(--coffee); text-decoration: none; font-weight: 800; }
+.order-history-actions .btn-link:hover { color: var(--caramel); }
+.order-receipt { margin-top: 1rem; border-top: 1px solid var(--border); color: var(--muted); font-size: 0.82rem; }
+.order-receipt summary { padding-top: 0.9rem; color: var(--coffee); cursor: pointer; font-weight: 800; }
+.receipt-lines { padding-top: 0.7rem; }
+.receipt-lines > div { display: flex; justify-content: space-between; gap: 1rem; padding: 0.25rem 0; }
+.receipt-lines strong { color: var(--coffee); }
+.receipt-lines hr { margin: 0.6rem 0; border-color: var(--border); }
+.receipt-lines .receipt-total { color: var(--coffee); font-weight: 800; }
+.receipt-lines p { margin: 0.75rem 0 0; font-size: 0.74rem; }
+.cancelled-state { display: grid; gap: 0.25rem; margin: 1.25rem 0; padding: 1rem; border-radius: 0.75rem; background: #fff4ef; color: #a44b3c; font-size: 0.8rem; }
+.cancelled-state span { color: var(--muted); }
 .order-track-panel { margin-top: 1.25rem; padding: 1rem; border: 1px solid var(--border); border-radius: 0.85rem; background: color-mix(in srgb, var(--peach) 18%, var(--surface)); }
 .track-panel-head { display: flex; align-items: start; justify-content: space-between; gap: 1rem; }
 .track-panel-head h3 { margin: 0.25rem 0 0; color: var(--coffee); font-size: 1rem; }
@@ -139,5 +172,10 @@
 .track-rider { position: absolute; z-index: 2; top: 48%; left: 54%; display: grid; width: 1.25rem; height: 1.25rem; place-items: center; border: 3px solid #fff; border-radius: 50%; background: var(--caramel); color: transparent; box-shadow: 0 0 0 0.3rem rgba(197,106,45,0.2); animation: rider-pulse 1.8s ease-in-out infinite; }
 .track-address { margin-bottom: 0.35rem; color: var(--coffee); font-size: 0.82rem; font-weight: 700; }
 .track-demo-note { color: var(--muted); font-size: 0.7rem; }
+.pickup-status-box { display: grid; gap: 0.3rem; margin: 1rem 0; padding: 1rem; border-radius: 0.7rem; background: var(--surface); color: var(--coffee); }
+.pickup-status-box span { color: var(--muted); font-size: 0.78rem; }
+.order-track-panel { animation: tracking-in 220ms ease-out both; }
+@keyframes tracking-in { from { opacity: 0; transform: translateY(-6px); } to { opacity: 1; transform: translateY(0); } }
 @keyframes rider-pulse { 50% { box-shadow: 0 0 0 0.6rem rgba(197,106,45,0.04); } }
-@media (max-width: 575px) { .orders-toolbar { align-items: stretch; flex-direction: column; } .orders-toolbar > .form-control { max-width: none; } .order-history-card { padding: 1.15rem; } .order-timeline { gap: 0.1rem; } .order-timeline span { font-size: 0.58rem; } }
+@media (max-width: 767px) { .orders-page-heading { align-items: start; flex-direction: column; gap: 0; } .orders-page-heading .btn { margin-bottom: 1.5rem; } .orders-overview { margin-bottom: 1.5rem; } }
+@media (max-width: 575px) { .orders-toolbar { align-items: stretch; flex-direction: column; } .orders-search-wrap { width: 100%; } .orders-overview { gap: 0.5rem; } .orders-overview > div { padding: 0.8rem; } .orders-overview small { font-size: 0.6rem; } .orders-overview strong { font-size: 1.25rem; } .order-history-card { padding: 1.15rem; } .order-history-title img { width: 52px; height: 52px; } .order-history-head h2 { font-size: 1.1rem; } .order-total-block > strong { font-size: 1rem; } .order-timeline { gap: 0; } .order-timeline span { font-size: 0.58rem; } .order-timeline em { white-space: normal; line-height: 1.2; } }

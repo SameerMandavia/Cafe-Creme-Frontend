@@ -11,6 +11,9 @@
     box-shadow: var(--shadow-soft);
     transition: transform 220ms ease, box-shadow 220ms ease;
 }
+.offer-card { position: relative; overflow: hidden; }
+.offer-card::before { position: absolute; top: 0; right: 0; width: 5rem; height: 5rem; border-radius: 0 0 0 100%; background: rgba(232,189,130,0.28); content: ""; }
+.offer-card strong { font-family: "DM Serif Display", Georgia, serif; font-size: 1.45rem; font-weight: 400; }
 .offer-card:hover { transform: translateY(-5px); box-shadow: var(--shadow-lift); }
 
 .offer-badge {
@@ -40,6 +43,7 @@
     color: var(--caramel);
     font-size: 1.2rem;
 }
+.offer-code { display: block; margin-top: 0.5rem; color: var(--cardamom); font-size: 0.72rem; font-weight: 800; letter-spacing: 0.05em; }
 
 .offer-note {
     margin-top: 3rem;

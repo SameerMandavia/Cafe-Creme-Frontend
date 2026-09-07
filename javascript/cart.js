@@ -1,4 +1,5 @@
 const cartKey = "cafe-creme-cart";
+const cartOptionsKey = "cafe-creme-cart-options";
 const deliveryCharge = 39;
 const freeDeliveryThreshold = 499;
 const cartItemsContainer = document.querySelector("#cart-items");
@@ -25,17 +26,55 @@ const mobileOrderTotal = document.querySelector("#mobile-order-total");
 const mobilePlaceOrder = document.querySelector("#mobile-place-order");
 const mapToggle = document.querySelector("#toggle-map");
 const mobileOrderBar = document.querySelector(".mobile-order-bar");
+const deliveryProgress = document.createElement("div");
+deliveryProgress.className = "delivery-progress d-none";
+deliveryProgress.innerHTML = '<span class="delivery-progress-copy"></span><div class="delivery-progress-bar"><span></span></div>';
+document.querySelector(".bill-summary")?.appendChild(deliveryProgress);
+document.querySelector(".checkout-reassurance")?.replaceChildren("Secure demo checkout - review your order before it is prepared.");
+const trustMessage = document.querySelector(".checkout-trust");
+if (trustMessage) trustMessage.innerHTML = "<span>Secure checkout</span><span>Freshly prepared</span><span>Easy support</span>";
+const timeOptions = document.querySelectorAll("#checkout-time option");
+if (timeOptions[2]) timeOptions[2].textContent = "In 30-40 minutes";
 const cartPanel = document.querySelector(".cart-panel");
 const cartItemsToggle = document.querySelector("#toggle-cart-items");
 const couponInput = document.querySelector("#checkout-coupon");
 const couponStatus = document.querySelector("#coupon-status");
 const discountRow = document.querySelector("#discount-row");
 const couponDiscount = document.querySelector("#coupon-discount");
+const pendingCoupon = localStorage.getItem("cafe-creme-pending-coupon");
+if (pendingCoupon && couponInput) couponInput.value = pendingCoupon;
+if (pendingCoupon && couponStatus) { couponStatus.textContent = pendingCoupon === "CAFE10" ? "Coupon ready: 10% off your items." : "Enter CAFE10 for a demo discount."; couponStatus.className = pendingCoupon === "CAFE10" ? "form-hint is-success" : "form-hint"; }
 let cafeMap;
 let cafeMarker;
 let cafeGeocoder;
 let leafletMap;
 let leafletMarker;
+
+function makeOptionalSection(section, title) {
+  if (!section || section.dataset.collapsible === "true") return;
+  const details = document.createElement("details");
+  details.className = "checkout-details";
+  const summary = document.createElement("summary");
+  summary.textContent = title;
+  const content = document.createElement("div");
+  content.className = "checkout-details-content";
+  details.append(summary, content);
+  section.querySelector("h3")?.remove();
+  while (section.firstChild) content.appendChild(section.firstChild);
+  section.replaceWith(details);
+  details.dataset.collapsible = "true";
+}
+
+makeOptionalSection(document.querySelector("#checkout-note")?.closest(".checkout-section"), "Add a note (optional)");
+makeOptionalSection(document.querySelector(".coupon-section"), "Have a coupon?");
+makeOptionalSection(document.querySelector(".payment-methods")?.closest(".checkout-section"), "Payment method");
+
+const paymentMethods = document.querySelector(".payment-methods");
+const paymentDetails = document.createElement("div");
+paymentDetails.className = "payment-details d-none";
+paymentDetails.innerHTML = '<label class="form-label" for="payment-reference">Payment details <span>(demo)</span></label><input class="form-control" id="payment-reference" type="text" placeholder="UPI ID or card last 4 digits" autocomplete="off"><small class="form-hint">This is a frontend placeholder. No payment is processed.</small>';
+paymentMethods?.closest(".checkout-details-content")?.appendChild(paymentDetails);
+paymentMethods?.addEventListener("change", (event) => { if (event.target.name === "payment") paymentDetails.classList.toggle("d-none", event.target.value === "cod"); });
 
 function escapeHtml(value = "") { const node = document.createElement("div"); node.textContent = String(value); return node.innerHTML; }
 
@@ -111,8 +150,10 @@ function getItems() {
 
 function selectedFulfilment() { return checkoutForm.elements.fulfilment.value; }
 
+function customisedPrice(item) { const options = JSON.parse(localStorage.getItem(cartOptionsKey) || "{}")[item.id] || {}; return item.price + (options.size === "Large" ? 40 : 0) + (options.extraShot ? 35 : 0); }
+
 function getCosts(items = getItems()) {
-  const subtotal = items.reduce((sum, { item, quantity }) => sum + item.price * quantity, 0);
+  const subtotal = items.reduce((sum, { item, quantity }) => sum + customisedPrice(item) * quantity, 0);
   const isDelivery = selectedFulfilment() === "delivery";
   const fee = isDelivery && subtotal < freeDeliveryThreshold ? deliveryCharge : 0;
   const coupon = couponInput?.value.trim().toUpperCase();
@@ -158,9 +199,21 @@ function renderCart() {
   cartTotal.textContent = formatCurrency(costs.total);
   placeOrderTotal.textContent = formatCurrency(costs.total);
   mobileOrderTotal.textContent = formatCurrency(costs.total);
+  const progress = deliveryProgress.querySelector(".delivery-progress-copy");
+  const progressBar = deliveryProgress.querySelector(".delivery-progress-bar span");
+  if (progress && progressBar && selectedFulfilment() === "delivery" && items.length) {
+    const remaining = Math.max(0, freeDeliveryThreshold - costs.subtotal);
+    deliveryProgress.classList.remove("d-none");
+    progress.textContent = remaining ? `Add ${formatCurrency(remaining)} more for free delivery.` : "You unlocked free delivery.";
+    progressBar.style.width = `${Math.min(100, Math.round((costs.subtotal / freeDeliveryThreshold) * 100))}%`;
+  } else deliveryProgress.classList.add("d-none");
   cartItemsContainer.innerHTML = items.map(({ item, quantity }) => `
-    <article class="cart-product"><div><h2>${escapeHtml(item.name)}</h2><p>${escapeHtml(item.description)}</p><strong>${formatCurrency(item.price)}</strong></div>
+    <article class="cart-product">${item.image ? `<img class="cart-product-image" src="${escapeHtml(item.image)}" alt="" width="80" height="80" loading="lazy" decoding="async" />` : ""}<div><h2>${escapeHtml(item.name)}</h2><p>${escapeHtml(item.description)}</p><strong>${formatCurrency(customisedPrice(item))}</strong></div>
     <div class="cart-controls" aria-label="${escapeHtml(item.name)} quantity"><button class="decrease-cart" data-id="${item.id}" type="button" aria-label="Remove one ${escapeHtml(item.name)}">−</button><span>${quantity}</span><button class="increase-cart" data-id="${item.id}" type="button" aria-label="Add one ${escapeHtml(item.name)}">+</button></div></article>`).join("");
+  const cartOptions = JSON.parse(localStorage.getItem(cartOptionsKey) || "{}");
+  cartItemsContainer.querySelectorAll(".cart-product").forEach((product) => { const id = product.querySelector("[data-id]")?.dataset.id; const option = cartOptions[id]; if (option) { const summary = document.createElement("small"); summary.className = "cart-customisation"; summary.textContent = `${option.size || "Regular"} / ${option.milk || "Whole milk"}${option.extraShot ? " / Extra shot" : ""}`; product.querySelector("h2")?.after(summary); } });
+  cartItemsContainer.querySelectorAll(".cart-product").forEach((product) => { const id = product.querySelector("[data-id]")?.dataset.id; const remove = document.createElement("button"); remove.type = "button"; remove.className = "remove-cart"; remove.dataset.id = id; remove.textContent = "Remove"; remove.setAttribute("aria-label", `Remove ${product.querySelector("h2")?.textContent || "item"} from cart`); product.querySelector("div")?.appendChild(remove); });
+  cartItemsContainer.querySelectorAll(".decrease-cart").forEach((button) => { button.textContent = "-"; });
 }
 
 if (checkoutUser) {
@@ -179,6 +232,7 @@ if (checkoutUser) {
 cartItemsContainer.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-id]");
   if (!button) return;
+  if (button.classList.contains("remove-cart")) { delete cart[button.dataset.id]; const options = JSON.parse(localStorage.getItem(cartOptionsKey) || "{}"); delete options[button.dataset.id]; localStorage.setItem(cartOptionsKey, JSON.stringify(options)); saveCart(); renderCart(); return; }
   const change = button.classList.contains("increase-cart") ? 1 : -1;
   cart[button.dataset.id] = (cart[button.dataset.id] || 0) + change;
   if (cart[button.dataset.id] <= 0) delete cart[button.dataset.id];
@@ -221,10 +275,15 @@ checkoutForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const items = getItems();
   if (!items.length) return;
+  const submitButton = checkoutForm.querySelector(".place-order-button");
+  submitButton.disabled = true;
+  submitButton.classList.add("is-loading");
+  submitButton.querySelector("span").textContent = "Preparing your order…";
   const details = Object.fromEntries(new FormData(checkoutForm).entries());
   const costs = getCosts(items);
   const order = {
     id: `CC-${Date.now().toString().slice(-6)}`,
+    userEmail: checkoutUser.email || "",
     customer: details.name,
     phone: details.phone,
     fulfilment: details.fulfilment,
@@ -236,7 +295,7 @@ checkoutForm.addEventListener("submit", (event) => {
     payment: details.payment || "Cash on delivery",
     coupon: details.coupon || "",
     note: details.note || "",
-    items: items.map(({ item, quantity }) => ({ name: item.name, price: item.price, quantity })),
+    items: items.map(({ item, quantity }) => ({ name: item.name, price: customisedPrice(item), quantity, options: JSON.parse(localStorage.getItem(cartOptionsKey) || "{}")[item.id] || null })),
     subtotal: costs.subtotal,
     deliveryFee: costs.fee,
     discount: costs.discount,
@@ -248,6 +307,7 @@ checkoutForm.addEventListener("submit", (event) => {
   orders.unshift(order);
   localStorage.setItem("cafe-creme-orders", JSON.stringify(orders));
   localStorage.setItem("cafe-creme-last-order", JSON.stringify(order));
+  localStorage.removeItem("cafe-creme-pending-coupon");
   if (order.address) localStorage.setItem("cafe-creme-saved-address", JSON.stringify({ address: order.address, latitude: order.latitude, longitude: order.longitude }));
   Object.keys(cart).forEach((key) => delete cart[key]);
   saveCart();

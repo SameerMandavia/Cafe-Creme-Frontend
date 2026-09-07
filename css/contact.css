@@ -12,6 +12,7 @@
     color: #6c5a50;
     line-height: 1.6;
 }
+.contact-details { height: 100%; }
 
 .contact-details a {
     color: var(--caramel);

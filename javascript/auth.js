@@ -38,3 +38,19 @@ function showAuthStatus(element, message, type = "danger") {
 }
 
 getUsers();
+
+document.querySelectorAll('input[type="password"]').forEach((input) => {
+  const wrapper = document.createElement("div");
+  wrapper.className = "password-field";
+  input.parentElement.insertBefore(wrapper, input);
+  wrapper.appendChild(input);
+  const toggle = document.createElement("button");
+  toggle.type = "button"; toggle.className = "password-toggle"; toggle.textContent = "Show";
+  toggle.setAttribute("aria-label", "Show password");
+  toggle.addEventListener("click", () => { const visible = input.type === "text"; input.type = visible ? "password" : "text"; toggle.textContent = visible ? "Show" : "Hide"; toggle.setAttribute("aria-label", `${visible ? "Show" : "Hide"} password`); });
+  wrapper.appendChild(toggle);
+  if (input.id === "signup-password") {
+    const strength = document.createElement("small"); strength.className = "password-strength"; strength.textContent = "Use 8+ characters with a number for a stronger password."; wrapper.after(strength);
+    input.addEventListener("input", () => { const good = input.value.length >= 8 && /\d/.test(input.value); strength.textContent = good ? "Strong password" : "Use 8+ characters with a number for a stronger password."; strength.classList.toggle("is-good", good); });
+  }
+});
