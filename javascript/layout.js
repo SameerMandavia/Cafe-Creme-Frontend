@@ -13,7 +13,7 @@ const navigation = `
       <div class="collapse navbar-collapse" id="navbarNav">
         <div class="nav-location"><span aria-hidden="true"><i class="fa-solid fa-location-dot"></i></span><div><small>Delivering to</small><strong>Choose location</strong></div></div>
         <ul class="navbar-nav ms-auto align-items-lg-center">
-          <li class="nav-item"><a class="nav-link" href="menu.html"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i> Menu</a></li><li class="nav-item"><a class="nav-link" href="offers.html"><i class="fa-solid fa-tag" aria-hidden="true"></i> Offers</a></li><li class="nav-item nav-cta-item"><a class="nav-link nav-cta" href="menu.html"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Order online</a></li><li class="nav-item" id="cart-nav"><a class="nav-link cart-link" href="cart.html" aria-label="View cart"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> <span class="cart-label">Cart</span> <span class="badge rounded-pill" id="cart-count">0</span></a></li><li class="nav-item" id="account-nav"></li>
+          <li class="nav-item"><a class="nav-link" href="offers.html"><i class="fa-solid fa-tag" aria-hidden="true"></i> Offers</a></li><li class="nav-item nav-cta-item"><a class="nav-link nav-cta" href="menu.html"><i class="fa-solid fa-bag-shopping" aria-hidden="true"></i> Order online</a></li><li class="nav-item" id="cart-nav"><a class="nav-link cart-link" href="cart.html" aria-label="View cart"><i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> <span class="cart-label">Cart</span> <span class="badge rounded-pill" id="cart-count">0</span></a></li><li class="nav-item" id="account-nav"></li>
         </ul>
       </div>
     </div>

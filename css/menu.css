@@ -162,3 +162,12 @@
 .menu-customisation .custom-check { grid-column: 1 / -1; display: flex; grid-template-columns: auto 1fr; align-items: center; gap: 0.5rem; font-weight: 700; }
 .menu-customisation .custom-check input { accent-color: var(--coffee); }
 @media (max-width: 575px) { .menu-customisation { grid-template-columns: 1fr; } }
+
+/* The larger catalog is grouped in full-width sections so every product card
+   shares the same rhythm instead of creating uneven half-column blocks. */
+@media (min-width: 768px) {
+    #menu-categories > [class*="col-"] { flex: 0 0 100%; width: 100%; }
+    .menu-group { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.9rem 1rem; height: 100%; }
+    .menu-group-heading { grid-column: 1 / -1; }
+    .menu-item { height: 100%; margin-top: 0; }
+}
