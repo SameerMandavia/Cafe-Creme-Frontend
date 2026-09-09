@@ -9,3 +9,9 @@
 .saved-address strong { color: var(--coffee); font-size: 0.82rem; }
 .saved-address a { color: var(--caramel); font-size: 0.75rem; font-weight: 800; }
 @media (max-width: 575px) { .account-card { padding: 1.25rem; } }
+.account-location-panel { display: grid; gap: 1rem; margin-top: 1.25rem; padding-top: 1.25rem; border-top: 1px solid var(--border); }
+.account-location-panel h2 { margin-bottom: 0.25rem; font-size: 1.35rem; }
+.account-location-help { margin: 0; color: var(--muted); font-size: 0.8rem; }
+.account-location-actions { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 0.85rem; }
+.account-location-actions .btn { flex: 1 1 150px; }
+#account-location-status { font-size: 0.8rem; }
