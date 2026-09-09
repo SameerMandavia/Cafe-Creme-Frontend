@@ -54,6 +54,11 @@ function reorder(orderId) {
 }
 
 renderOverview(); renderCustomerNotifications(); renderOrders();
+if (ordersCurrentUser && window.CafeCremeApi && localStorage.getItem("cafe-creme-api-token")) {
+  window.CafeCremeApi.orders().then((apiOrders) => {
+    orders = apiOrders.map((order) => ({ ...order, userEmail: ordersCurrentUser.email, status: ({ ORDER_RECEIVED: "Order received", PREPARING: "Preparing", READY_FOR_PICKUP: "Ready for pickup", OUT_FOR_DELIVERY: "Out for delivery", DELIVERED: "Delivered", CANCELLED: "Cancelled" }[order.status] || order.status), items: (order.items || []).map((item) => ({ ...item, price: item.unitPrice })) }));
+    renderOverview(); renderOrders();
+  }).catch(() => { /* retain local history if API is unavailable */ });
 window.addEventListener("storage", (event) => { if (event.key === "cafe-creme-orders") { orders = JSON.parse(event.newValue || "[]"); renderOverview(); renderOrders(); } if (event.key === "cafe-creme-notifications") renderCustomerNotifications(); });
 ordersSearch.addEventListener("input", renderOrders);
 document.querySelectorAll(".order-filter").forEach((button) => button.addEventListener("click", () => { activeFilter = button.dataset.filter; document.querySelectorAll(".order-filter").forEach((item) => item.classList.toggle("is-active", item === button)); renderOrders(); }));

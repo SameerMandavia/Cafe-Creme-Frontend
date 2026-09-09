@@ -29,3 +29,10 @@ function getMenuItems() {
 }
 
 function saveMenuItems(items) { localStorage.setItem("cafe-creme-menu", JSON.stringify(items.map(normaliseMenuItem))); }
+
+if (window.CafeCremeApi) {
+  window.CafeCremeApi.menu().then((items) => {
+    saveMenuItems(items);
+    window.dispatchEvent(new Event("cafe-creme-menu-ready"));
+  }).catch(() => { /* local catalog remains the fallback */ });
+}

@@ -271,7 +271,7 @@ useCurrentLocationButton.addEventListener("click", () => {
     useCurrentLocationButton.disabled = false;
   }, { enableHighAccuracy: true, timeout: 10000, maximumAge: 300000 });
 });
-checkoutForm.addEventListener("submit", (event) => {
+checkoutForm.addEventListener("submit", async (event) => {
   event.preventDefault();
   const items = getItems();
   if (!items.length) return;
@@ -281,6 +281,21 @@ checkoutForm.addEventListener("submit", (event) => {
   submitButton.querySelector("span").textContent = "Preparing your order…";
   const details = Object.fromEntries(new FormData(checkoutForm).entries());
   const costs = getCosts(items);
+  if (window.CafeCremeApi && localStorage.getItem("cafe-creme-api-token")) {
+    try {
+      const apiOrder = await window.CafeCremeApi.checkout({ items: items.map(({ item, quantity }) => ({ productId: item.id, quantity, optionAdjustments: [customisedPrice(item) - item.price] })), fulfilment: details.fulfilment, address: details.address || "", paymentMethod: details.payment || "Cash on delivery" });
+      const order = { ...apiOrder, userEmail: checkoutUser.email, customer: details.name, phone: details.phone, payment: details.payment || "Cash on delivery", items: (apiOrder.items || []).map((item) => ({ ...item, price: item.unitPrice })) };
+      localStorage.setItem("cafe-creme-last-order", JSON.stringify(order));
+      localStorage.removeItem("cafe-creme-pending-coupon");
+      Object.keys(cart).forEach((key) => delete cart[key]); saveCart();
+      window.location.href = "order-success.html";
+      return;
+    } catch (error) {
+      submitButton.disabled = false; submitButton.classList.remove("is-loading"); submitButton.querySelector("span").textContent = "Place order";
+      document.querySelector("#checkout-status").textContent = "We could not place the order. Please try again.";
+      return;
+    }
+  }
   const order = {
     id: `CC-${Date.now().toString().slice(-6)}`,
     userEmail: checkoutUser.email || "",
