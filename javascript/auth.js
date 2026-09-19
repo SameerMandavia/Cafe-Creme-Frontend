@@ -2,7 +2,7 @@ const authUsersKey = "cafe-creme-users";
 const currentUserKey = "cafe-creme-current-user";
 
 function getUsers() {
-  const savedUsers = JSON.parse(localStorage.getItem(authUsersKey) || "[]");
+  const savedUsers = window.cafeStorage?.read(authUsersKey, []) || [];
   if (!savedUsers.some((user) => user.role === "admin")) {
     savedUsers.push({ name: "Cafe Admin", email: "admin@cafecreme.local", password: "admin123", role: "admin" });
     localStorage.setItem(authUsersKey, JSON.stringify(savedUsers));
@@ -11,11 +11,11 @@ function getUsers() {
 }
 
 function getCurrentUser() {
-  return JSON.parse(localStorage.getItem(currentUserKey) || "null");
+  return window.cafeStorage?.read(currentUserKey, null) || null;
 }
 
 function setCurrentUser(user) {
-  localStorage.setItem(currentUserKey, JSON.stringify({ name: user.name, email: user.email, phone: user.phone || "", role: user.role }));
+  window.cafeStorage?.write(currentUserKey, { name: user.name, email: user.email, phone: user.phone || "", role: user.role });
 }
 
 function logout() {

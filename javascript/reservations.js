@@ -7,7 +7,7 @@ reservationDate.min = new Date().toISOString().split("T")[0];
 reservationForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const details = Object.fromEntries(new FormData(reservationForm).entries());
-  const reservations = JSON.parse(localStorage.getItem("cafe-creme-reservations") || "[]");
+  const reservations = window.cafeStorage?.read("cafe-creme-reservations", []) || [];
   reservations.unshift({
     id: `RES-${Date.now().toString().slice(-6)}`,
     ...details,

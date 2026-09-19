@@ -13,9 +13,11 @@ const checkoutForm = document.querySelector("#checkout-form");
 const deliveryFields = document.querySelector("#delivery-fields");
 const addressInput = document.querySelector("#checkout-address");
 const timeHeading = document.querySelector("#time-heading");
-const cart = JSON.parse(localStorage.getItem(cartKey) || "{}");
-const sessionUser = JSON.parse(localStorage.getItem("cafe-creme-current-user") || "null");
-const registeredUsers = JSON.parse(localStorage.getItem("cafe-creme-users") || "[]");
+const readLocal = (key, fallback) => window.cafeStorage?.read(key, fallback) ?? fallback;
+const writeLocal = (key, value) => window.cafeStorage?.write(key, value) ?? false;
+const cart = readLocal(cartKey, {});
+const sessionUser = readLocal("cafe-creme-current-user", null);
+const registeredUsers = readLocal("cafe-creme-users", []);
 const checkoutUser = registeredUsers.find((user) => user.email === sessionUser?.email) || sessionUser;
 const addressSearch = document.querySelector("#address-search");
 const useCurrentLocationButton = document.querySelector("#use-current-location");
@@ -26,6 +28,7 @@ const mobileOrderTotal = document.querySelector("#mobile-order-total");
 const mobilePlaceOrder = document.querySelector("#mobile-place-order");
 const mapToggle = document.querySelector("#toggle-map");
 const mobileOrderBar = document.querySelector(".mobile-order-bar");
+const checkoutStatus = document.querySelector("#checkout-status");
 const deliveryProgress = document.createElement("div");
 deliveryProgress.className = "delivery-progress d-none";
 deliveryProgress.innerHTML = '<span class="delivery-progress-copy"></span><div class="delivery-progress-bar"><span></span></div>';
@@ -44,6 +47,7 @@ const couponDiscount = document.querySelector("#coupon-discount");
 const pendingCoupon = localStorage.getItem("cafe-creme-pending-coupon");
 if (pendingCoupon && couponInput) couponInput.value = pendingCoupon;
 if (pendingCoupon && couponStatus) { couponStatus.textContent = pendingCoupon === "CAFE10" ? "Coupon ready: 10% off your items." : "Enter CAFE10 for a demo discount."; couponStatus.className = pendingCoupon === "CAFE10" ? "form-hint is-success" : "form-hint"; }
+if (!sessionStorage.getItem("cafe-creme-checkout-viewed")) { sessionStorage.setItem("cafe-creme-checkout-viewed", "1"); window.cafeTrack?.("checkout_view"); }
 let cafeMap;
 let cafeMarker;
 let cafeGeocoder;
@@ -150,7 +154,7 @@ function getItems() {
 
 function selectedFulfilment() { return checkoutForm.elements.fulfilment.value; }
 
-function customisedPrice(item) { const options = JSON.parse(localStorage.getItem(cartOptionsKey) || "{}")[item.id] || {}; return item.price + (options.size === "Large" ? 40 : 0) + (options.extraShot ? 35 : 0); }
+function customisedPrice(item) { const options = readLocal(cartOptionsKey, {})[item.id] || {}; return item.price + (options.size === "Large" ? 40 : 0) + (options.extraShot ? 35 : 0); }
 
 function getCosts(items = getItems()) {
   const subtotal = items.reduce((sum, { item, quantity }) => sum + customisedPrice(item) * quantity, 0);
@@ -210,7 +214,7 @@ function renderCart() {
   cartItemsContainer.innerHTML = items.map(({ item, quantity }) => `
     <article class="cart-product">${item.image ? `<img class="cart-product-image" src="${escapeHtml(item.image)}" alt="" width="80" height="80" loading="lazy" decoding="async" />` : ""}<div><h2>${escapeHtml(item.name)}</h2><p>${escapeHtml(item.description)}</p><strong>${formatCurrency(customisedPrice(item))}</strong></div>
     <div class="cart-controls" aria-label="${escapeHtml(item.name)} quantity"><button class="decrease-cart" data-id="${item.id}" type="button" aria-label="Remove one ${escapeHtml(item.name)}">−</button><span>${quantity}</span><button class="increase-cart" data-id="${item.id}" type="button" aria-label="Add one ${escapeHtml(item.name)}">+</button></div></article>`).join("");
-  const cartOptions = JSON.parse(localStorage.getItem(cartOptionsKey) || "{}");
+  const cartOptions = readLocal(cartOptionsKey, {});
   cartItemsContainer.querySelectorAll(".cart-product").forEach((product) => { const id = product.querySelector("[data-id]")?.dataset.id; const option = cartOptions[id]; if (option) { const summary = document.createElement("small"); summary.className = "cart-customisation"; summary.textContent = `${option.size || "Regular"} / ${option.milk || "Whole milk"}${option.extraShot ? " / Extra shot" : ""}`; product.querySelector("h2")?.after(summary); } });
   cartItemsContainer.querySelectorAll(".cart-product").forEach((product) => { const id = product.querySelector("[data-id]")?.dataset.id; const remove = document.createElement("button"); remove.type = "button"; remove.className = "remove-cart"; remove.dataset.id = id; remove.textContent = "Remove"; remove.setAttribute("aria-label", `Remove ${product.querySelector("h2")?.textContent || "item"} from cart`); product.querySelector("div")?.appendChild(remove); });
   cartItemsContainer.querySelectorAll(".decrease-cart").forEach((button) => { button.textContent = "-"; });
@@ -232,7 +236,7 @@ if (checkoutUser) {
 cartItemsContainer.addEventListener("click", (event) => {
   const button = event.target.closest("button[data-id]");
   if (!button) return;
-  if (button.classList.contains("remove-cart")) { delete cart[button.dataset.id]; const options = JSON.parse(localStorage.getItem(cartOptionsKey) || "{}"); delete options[button.dataset.id]; localStorage.setItem(cartOptionsKey, JSON.stringify(options)); saveCart(); renderCart(); return; }
+  if (button.classList.contains("remove-cart")) { delete cart[button.dataset.id]; const options = readLocal(cartOptionsKey, {}); delete options[button.dataset.id]; writeLocal(cartOptionsKey, options); saveCart(); renderCart(); return; }
   const change = button.classList.contains("increase-cart") ? 1 : -1;
   cart[button.dataset.id] = (cart[button.dataset.id] || 0) + change;
   if (cart[button.dataset.id] <= 0) delete cart[button.dataset.id];
@@ -243,7 +247,7 @@ cartItemsContainer.addEventListener("click", (event) => {
 checkoutForm.addEventListener("change", (event) => { if (event.target.name === "fulfilment") updateFulfilmentUI(); });
 checkoutForm.addEventListener("input", () => updateCheckoutProgress());
 document.querySelectorAll(".payment-method input").forEach((input) => input.addEventListener("change", () => document.querySelectorAll(".payment-method").forEach((method) => method.classList.toggle("is-active", method.querySelector("input").checked))));
-document.querySelector("#apply-coupon")?.addEventListener("click", () => { const code = couponInput.value.trim().toUpperCase(); couponInput.value = code; couponStatus.textContent = code === "CAFE10" ? "Coupon applied: 10% off your items." : "Try CAFE10 for a demo discount."; couponStatus.className = code === "CAFE10" ? "form-hint is-success" : "form-hint is-error"; renderCart(); });
+document.querySelector("#apply-coupon")?.addEventListener("click", () => { const code = couponInput.value.trim().toUpperCase(); couponInput.value = code; couponStatus.textContent = code === "CAFE10" ? "Coupon applied: 10% off your items." : "Try CAFE10 for a demo discount."; couponStatus.className = code === "CAFE10" ? "form-hint is-success" : "form-hint is-error"; if (code === "CAFE10") window.cafeTrack?.("coupon_applied"); renderCart(); });
 mapToggle.addEventListener("click", () => {
   const isExpanded = mapToggle.getAttribute("aria-expanded") === "true";
   mapToggle.setAttribute("aria-expanded", String(!isExpanded));
@@ -275,6 +279,10 @@ checkoutForm.addEventListener("submit", (event) => {
   event.preventDefault();
   const items = getItems();
   if (!items.length) return;
+  if (!checkoutForm.checkValidity()) { checkoutForm.reportValidity(); return; }
+  const phoneDigits = checkoutForm.elements.phone.value.replace(/\D/g, "");
+  if (phoneDigits.length < 10) { if (checkoutStatus) { checkoutStatus.textContent = "Enter a valid 10-digit phone number before placing your order."; checkoutStatus.className = "alert alert-warning mt-3"; } checkoutForm.elements.phone.focus(); return; }
+  if (checkoutStatus) checkoutStatus.textContent = "";
   const submitButton = checkoutForm.querySelector(".place-order-button");
   submitButton.disabled = true;
   submitButton.classList.add("is-loading");
@@ -295,7 +303,7 @@ checkoutForm.addEventListener("submit", (event) => {
     payment: details.payment || "Cash on delivery",
     coupon: details.coupon || "",
     note: details.note || "",
-    items: items.map(({ item, quantity }) => ({ name: item.name, price: customisedPrice(item), quantity, options: JSON.parse(localStorage.getItem(cartOptionsKey) || "{}")[item.id] || null })),
+    items: items.map(({ item, quantity }) => ({ name: item.name, price: customisedPrice(item), quantity, options: readLocal(cartOptionsKey, {})[item.id] || null })),
     subtotal: costs.subtotal,
     deliveryFee: costs.fee,
     discount: costs.discount,
@@ -303,10 +311,11 @@ checkoutForm.addEventListener("submit", (event) => {
     status: "Order received",
     createdAt: new Date().toISOString()
   };
-  const orders = JSON.parse(localStorage.getItem("cafe-creme-orders") || "[]");
+  const orders = readLocal("cafe-creme-orders", []);
   orders.unshift(order);
   localStorage.setItem("cafe-creme-orders", JSON.stringify(orders));
   localStorage.setItem("cafe-creme-last-order", JSON.stringify(order));
+  window.cafeTrack?.("order_placed");
   localStorage.removeItem("cafe-creme-pending-coupon");
   if (order.address) localStorage.setItem("cafe-creme-saved-address", JSON.stringify({ address: order.address, latitude: order.latitude, longitude: order.longitude }));
   Object.keys(cart).forEach((key) => delete cart[key]);

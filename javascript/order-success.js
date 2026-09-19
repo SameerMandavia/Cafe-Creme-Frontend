@@ -1,7 +1,7 @@
 const confirmationCard = document.querySelector("#confirmation-card");
 const requestedOrderId = new URLSearchParams(window.location.search).get("order");
-const savedOrders = JSON.parse(localStorage.getItem("cafe-creme-orders") || "[]");
-const order = (requestedOrderId ? savedOrders.find((entry) => entry.id === requestedOrderId) : null) || JSON.parse(localStorage.getItem("cafe-creme-last-order") || "null");
+const savedOrders = window.cafeStorage?.read("cafe-creme-orders", []) || [];
+const order = (requestedOrderId ? savedOrders.find((entry) => entry.id === requestedOrderId) : null) || window.cafeStorage?.read("cafe-creme-last-order", null) || null;
 const escapeOrderHtml = (value = "") => { const node = document.createElement("div"); node.textContent = String(value); return node.innerHTML; };
 
 if (!order) {

@@ -19,6 +19,7 @@
 .panel-toggle { display: none; padding: 0; border: 0; background: none; color: var(--coffee); font-size: 0.78rem; font-weight: 800; text-decoration: underline; }
 .cart-panel.is-collapsed #cart-items { display: none; }
 .cart-product { display: flex; align-items: center; justify-content: space-between; gap: 1rem; padding: 1.4rem 0; border-bottom: 1px solid var(--border); }
+.cart-product > div:nth-child(2) { min-width: 0; flex: 1 1 auto; }
 .cart-product-image { width: 80px; height: 80px; flex: 0 0 auto; border-radius: 0.7rem; object-fit: cover; }
 .cart-product:last-child { padding-bottom: 0; border-bottom: 0; }
 .cart-product h2 { margin-bottom: 0.4rem; color: var(--coffee); font-size: 1.1rem; }

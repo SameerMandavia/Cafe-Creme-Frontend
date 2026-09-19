@@ -37,7 +37,8 @@ function getMenuItems() {
     localStorage.setItem("cafe-creme-menu", JSON.stringify(initialItems));
     return initialItems;
   }
-  const saved = JSON.parse(savedItems).map(normaliseMenuItem);
+  let saved;
+  try { saved = JSON.parse(savedItems).map(normaliseMenuItem); } catch { saved = defaultMenuItems.map((item) => normaliseMenuItem(item)); localStorage.setItem("cafe-creme-menu", JSON.stringify(saved)); }
   const existingIds = new Set(saved.map((item) => item.id));
   const missingDefaults = defaultMenuItems.filter((item) => !existingIds.has(item.id)).map(normaliseMenuItem);
   if (missingDefaults.length) {

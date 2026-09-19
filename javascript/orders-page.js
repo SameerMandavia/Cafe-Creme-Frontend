@@ -1,7 +1,7 @@
 const ordersList = document.querySelector("#orders-list");
 const ordersEmpty = document.querySelector("#orders-empty");
-const ordersCurrentUser = JSON.parse(localStorage.getItem("cafe-creme-current-user") || "null");
-let orders = ordersCurrentUser ? JSON.parse(localStorage.getItem("cafe-creme-orders") || "[]").filter((order) => !order.userEmail || order.userEmail === ordersCurrentUser.email) : [];
+const ordersCurrentUser = window.cafeStorage?.read("cafe-creme-current-user", null) || null;
+let orders = ordersCurrentUser ? (window.cafeStorage?.read("cafe-creme-orders", []) || []).filter((order) => !order.userEmail || order.userEmail === ordersCurrentUser.email) : [];
 const ordersToolbar = document.querySelector("#orders-toolbar");
 const ordersSearch = document.querySelector("#orders-search");
 let activeFilter = "all";
@@ -19,7 +19,7 @@ function renderOverview() {
   document.querySelector("#orders-active-count").textContent = orders.filter((order) => isActive(order.status || "Order received")).length;
   document.querySelector("#orders-total-spend").textContent = formatCurrency(orders.reduce((total, order) => total + Number(order.total || 0), 0));
 }
-function renderCustomerNotifications() { const notifications = ordersCurrentUser ? JSON.parse(localStorage.getItem("cafe-creme-notifications") || "[]").filter((item) => item.userEmail === ordersCurrentUser.email) : []; let center = document.querySelector("#customer-notifications"); if (!notifications.length) { center?.remove(); return; } if (!center) { center = document.createElement("section"); center.id = "customer-notifications"; center.className = "customer-notifications"; document.querySelector(".orders-page-heading").after(center); } center.innerHTML = `<div class="customer-notifications-heading"><strong><i class="fa-solid fa-bell" aria-hidden="true"></i> Updates</strong><span>${notifications.length} notification${notifications.length === 1 ? "" : "s"}</span></div>${notifications.slice(0, 3).map((item) => `<article><i class="fa-solid ${item.type === "reservation" ? "fa-calendar-check" : "fa-circle-info"}" aria-hidden="true"></i><div><strong>${escapeOrder(item.title)}</strong><p>${escapeOrder(item.message)}</p><small>${formatOrderDateTime(item.createdAt)}</small></div></article>`).join("")}`; }
+function renderCustomerNotifications() { const notifications = ordersCurrentUser ? (window.cafeStorage?.read("cafe-creme-notifications", []) || []).filter((item) => item.userEmail === ordersCurrentUser.email) : []; let center = document.querySelector("#customer-notifications"); if (!notifications.length) { center?.remove(); return; } if (!center) { center = document.createElement("section"); center.id = "customer-notifications"; center.className = "customer-notifications"; document.querySelector(".orders-page-heading").after(center); } center.innerHTML = `<div class="customer-notifications-heading"><strong><i class="fa-solid fa-bell" aria-hidden="true"></i> Updates</strong><span>${notifications.length} notification${notifications.length === 1 ? "" : "s"}</span></div>${notifications.slice(0, 3).map((item) => `<article><i class="fa-solid ${item.type === "reservation" ? "fa-calendar-check" : "fa-circle-info"}" aria-hidden="true"></i><div><strong>${escapeOrder(item.title)}</strong><p>${escapeOrder(item.message)}</p><small>${formatOrderDateTime(item.createdAt)}</small></div></article>`).join("")}`; }
 
 function renderOrderCard(order) {
   const status = order.status || "Order received";

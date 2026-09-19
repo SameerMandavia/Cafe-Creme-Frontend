@@ -21,7 +21,7 @@
 .admin-notification-panel button i { width: 1rem; color: var(--caramel); }
 .admin-notification-panel[hidden] { display: none; }
 .admin-report-filters { display: flex; flex-wrap: wrap; gap: 0.35rem; align-items: center; }
-.admin-report-filters label { color: var(--muted); font-size: 0.68rem; font-weight: 800; }
+.admin-report-filters label { display: inline-flex; align-items: center; gap: 0.4rem; color: var(--muted); font-size: 0.68rem; font-weight: 800; }
 .admin-report-filters input { width: 8rem; padding: 0.48rem 0.55rem; border: 1px solid var(--border); border-radius: 0.45rem; color: var(--coffee); font: inherit; font-size: 0.72rem; }
 .admin-heading-actions #store-toggle { color: #17634e; border-color: #a9d4bd; }
 .admin-heading-actions #store-toggle.is-closed { color: #9d3f22; border-color: #e5b39d; background: #fff4ed; }
@@ -56,6 +56,7 @@
 .admin-insight > span { color: var(--caramel); font-size: 0.68rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
 .admin-insight > strong { color: var(--coffee); font-size: 1.7rem; }
 .admin-insight > small { color: var(--muted); font-size: 0.74rem; }
+.admin-visitor-insight em { display: block; margin-top: 0.45rem; color: var(--caramel); font-size: 0.68rem; font-style: normal; font-weight: 700; }
 .admin-stock-alert { border-color: #e7c58e; background: linear-gradient(135deg, #fffaf1, #fff2d9); }
 .admin-stock-alert > span i { margin-right: 0.35rem; }
 .admin-quick-actions { margin-top: 1rem; }
@@ -261,6 +262,19 @@
     color: var(--coffee);
     font-size: 1.5rem;
 }
+.admin-image-preview { display: none; margin-top: 0.65rem; min-height: 4rem; padding: 0.45rem; border: 1px dashed var(--border); border-radius: 0.6rem; color: var(--muted); font-size: 0.72rem; }
+.admin-image-preview.is-visible { display: block; }
+.admin-image-preview img { display: block; width: 100%; height: 8rem; border-radius: 0.45rem; object-fit: cover; }
+.admin-card-heading > div { min-width: 0; }
+.admin-panel-help { max-width: 44rem; margin: 0.45rem 0 0; color: var(--muted); font-size: 0.78rem; line-height: 1.55; }
+.admin-inline-status { color: var(--cardamom); font-size: 0.78rem; font-weight: 700; }
+.admin-view-container > #admin-festivals { overflow: hidden; border-color: rgba(197, 106, 45, 0.28) !important; background: linear-gradient(145deg, #fffaf5, #fff); }
+.admin-view-container > #admin-festivals > .card-body { padding: clamp(1.1rem, 2.5vw, 2rem) !important; }
+.admin-view-container > #admin-festivals form { padding: 1.15rem; border: 1px solid var(--border); border-radius: 0.85rem; background: rgba(255, 255, 255, 0.78); }
+.admin-view-container > #admin-festivals hr { border-color: var(--border); opacity: 0.8; }
+.admin-view-container > #admin-festivals .form-check { color: var(--muted); font-size: 0.78rem; }
+.admin-view-container > #admin-festivals .form-switch { padding: 0.65rem 0.8rem 0.65rem 2.5rem; border: 1px solid var(--border); border-radius: 0.65rem; background: #fffaf1; }
+.admin-view-container > #admin-festivals .form-switch .form-check-input { margin-left: -1.7rem; }
 .admin-table-shell .card-body { min-width: 0; }
 .admin-table-shell th, .admin-table-shell td { vertical-align: middle; }
 .admin-view-container > .admin-view > .admin-card,
@@ -280,6 +294,14 @@
 .admin-menu-summary > div, .admin-front-desk-summary > div { display: grid; gap: 0.2rem; padding: 0.8rem 0.9rem; border: 1px solid var(--border); border-radius: 0.65rem; background: #fffaf1; }
 .admin-menu-summary span, .admin-front-desk-summary span { color: var(--muted); font-size: 0.66rem; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; }
 .admin-menu-summary strong, .admin-front-desk-summary strong { color: var(--coffee); font-size: 1.25rem; }
+.admin-funnel { margin-top: 1rem; }
+.admin-funnel-steps { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: .75rem; }
+.admin-funnel-step { min-width: 0; padding: .75rem; border: 1px solid var(--border); border-radius: .7rem; background: #fffaf1; }
+.admin-funnel-step > div { display: flex; justify-content: space-between; align-items: baseline; gap: .4rem; }
+.admin-funnel-step span, .admin-funnel-step small { color: var(--muted); font-size: .68rem; }
+.admin-funnel-step strong { color: var(--coffee); font-size: 1.15rem; }
+.admin-funnel-track { display: block; height: .4rem; margin: .65rem 0 .4rem; overflow: hidden; border-radius: 999px; background: #eadfce; }
+.admin-funnel-track b { display: block; height: 100%; border-radius: inherit; background: linear-gradient(90deg, var(--caramel), var(--orange)); }
 
 .admin-table-shell th {
     color: var(--coffee);
@@ -288,6 +310,7 @@
 .admin-table-shell tbody tr:hover { background: #fffaf1; }
 .admin-table-shell .btn-group { display: inline-flex; flex-wrap: nowrap; justify-content: flex-end; gap: 0.25rem; white-space: nowrap; }
 .admin-table-shell .btn-group .btn { padding: 0.35rem 0.5rem; font-size: 0.72rem; }
+.admin-table-shell .btn-group { align-items: center; }
 .admin-popular-label { display: inline-block; margin-left: 0.45rem; padding: 0.18rem 0.4rem; border-radius: 999px; background: var(--peach); color: var(--coffee); font-size: 0.62rem; font-weight: 800; vertical-align: middle; }
 .admin-page section[id] { scroll-margin-top: 1rem; }
 
@@ -332,6 +355,7 @@
     .admin-insights { grid-template-columns: 1fr; }
     .admin-quick-action-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .admin-analytics { grid-template-columns: 1fr; }
+    .admin-funnel-steps { grid-template-columns: 1fr 1fr; }
     .admin-menu-summary { grid-template-columns: repeat(2, minmax(0, 1fr)); }
     .admin-front-desk-summary { grid-template-columns: 1fr; }
     .admin-settings-grid { grid-template-columns: 1fr; }
@@ -340,6 +364,8 @@
     .kitchen-sla small { grid-column: 1 / -1; }
     .admin-inline-search { width: 100%; margin-top: 0.75rem; }
     .admin-card-heading { flex-wrap: wrap; }
+    .admin-panel-help { max-width: none; }
+    .admin-view-container > #admin-festivals form { padding: 0.85rem; }
     .admin-sidebar-collapsed .admin-content-layout { grid-template-columns: 1fr; }
     .admin-sidebar-collapsed .admin-section-nav a > span:last-child { display: inline; }
     .admin-table-shell .btn-group { justify-content: flex-start; }

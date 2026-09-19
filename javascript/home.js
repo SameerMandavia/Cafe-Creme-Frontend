@@ -7,7 +7,7 @@ const heroAddressInput = document.querySelector("#hero-address-input");
 const homeOrderTracker = document.querySelector("#home-order-tracker");
 const homeTrackerStatus = document.querySelector("#home-tracker-status");
 const homeTrackerMeta = document.querySelector("#home-tracker-meta");
-const savedAddress = JSON.parse(localStorage.getItem("cafe-creme-saved-address") || "null");
+const savedAddress = window.cafeStorage?.read("cafe-creme-saved-address", null) || null;
 if (homeLocationLabel && savedAddress?.address) {
   const displayAddress = /^GPS location/i.test(savedAddress.address) ? "Current location" : savedAddress.address;
   homeLocationLabel.textContent = displayAddress.length > 30 ? `${displayAddress.slice(0, 30)}…` : displayAddress;
@@ -23,7 +23,7 @@ heroAddressForm?.addEventListener("submit", (event) => {
   if (locationLabel) locationLabel.textContent = address.length > 24 ? `${address.slice(0, 24)}…` : address;
   window.location.href = "menu.html";
 });
-const recentOrders = JSON.parse(localStorage.getItem("cafe-creme-orders") || "[]");
+const recentOrders = window.cafeStorage?.read("cafe-creme-orders", []) || [];
 const activeDeliveryOrder = recentOrders.find((order) => order.fulfilment === "delivery" && !["Delivered", "Cancelled"].includes(order.status));
 const latestOrder = activeDeliveryOrder || recentOrders[0];
 if (latestOrder && homeOrderTracker) {
@@ -76,5 +76,5 @@ const categories = [...new Set(homeProducts.map((item) => item.category))].slice
 categoryLinks.innerHTML = categories.map((category) => `<a href="menu.html#categories"><i class="fa-solid fa-mug-hot" aria-hidden="true"></i>${category}</a>`).join("");
 const popular = homeProducts.filter((item) => item.isPopular || item.status === "available").slice(0, 4);
 popularGrid.innerHTML = popular.map((item) => `<article class="home-popular-card"><div class="home-popular-image">${item.image ? `<img src="${item.image}" alt="${item.name}" loading="lazy" />` : `<i class="fa-solid fa-mug-hot" aria-hidden="true"></i>`}</div><div><span>${item.category}</span><h3>${item.name}</h3><p>${item.description}</p><strong>${formatCurrency(item.price)}</strong></div><button class="btn btn-sm btn-dark home-add-button" type="button" data-home-item="${item.id}"><i class="fa-solid fa-plus" aria-hidden="true"></i> Add</button></article>`).join("");
-popularGrid.addEventListener("click", (event) => { const button = event.target.closest("[data-home-item]"); if (!button) return; const cart = JSON.parse(localStorage.getItem("cafe-creme-cart") || "{}"); cart[button.dataset.homeItem] = (cart[button.dataset.homeItem] || 0) + 1; localStorage.setItem("cafe-creme-cart", JSON.stringify(cart)); document.querySelector("#cart-count").textContent = Object.values(cart).reduce((total, quantity) => total + quantity, 0); button.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i> Added'; button.disabled = true; setTimeout(() => { button.innerHTML = '<i class="fa-solid fa-plus" aria-hidden="true"></i> Add'; button.disabled = false; }, 1200); });
+popularGrid.addEventListener("click", (event) => { const button = event.target.closest("[data-home-item]"); if (!button) return; if (!window.cafeCart?.change(button.dataset.homeItem, 1)) { button.setAttribute("aria-label", "Online ordering is currently paused"); return; } button.innerHTML = '<i class="fa-solid fa-check" aria-hidden="true"></i> Added'; button.setAttribute("aria-live", "polite"); button.disabled = true; setTimeout(() => { button.innerHTML = '<i class="fa-solid fa-plus" aria-hidden="true"></i> Add'; button.disabled = false; }, 1200); });
 homeDiscovery.querySelector("#home-menu-search")?.addEventListener("submit", (event) => { event.preventDefault(); const query = homeDiscovery.querySelector("#home-menu-query").value.trim(); window.location.href = `menu.html${query ? `?search=${encodeURIComponent(query)}` : ""}`; });
