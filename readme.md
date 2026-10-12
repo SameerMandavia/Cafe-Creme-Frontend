@@ -4,7 +4,7 @@ Frontend-only cafe application built with HTML, CSS, Bootstrap, and JavaScript.
 
 ## Run locally
 
-Open `html/home.html` with VS Code Live Server. The pages use browser `localStorage` for the cart, accounts, and menu products.
+Open `html/index.html` with VS Code Live Server. The pages use browser `localStorage` for the cart, accounts, and menu products.
 
 ## Demo admin
 

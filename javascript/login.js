@@ -12,5 +12,5 @@ loginForm.addEventListener("submit", (event) => {
   }
 
   setCurrentUser(user);
-  window.location.href = user.role === "admin" ? "admin.html" : "home.html";
+  window.location.href = user.role === "admin" ? "admin.html" : "index.html";
 });

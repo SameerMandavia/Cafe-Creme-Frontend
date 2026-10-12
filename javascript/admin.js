@@ -286,7 +286,7 @@ previewFestivalButton.type = "button";
 previewFestivalButton.className = "btn btn-outline-dark ms-2";
 previewFestivalButton.textContent = "Preview theme";
 festivalThemeActions.appendChild(previewFestivalButton);
-previewFestivalButton.addEventListener("click", () => { if (!activeFestivalId.value) { showAuthStatus(document.querySelector("#festival-theme-status"), "Choose a festival to preview."); return; } window.open(`home.html?festival=${encodeURIComponent(activeFestivalId.value)}`, "_blank", "noopener"); });
+previewFestivalButton.addEventListener("click", () => { if (!activeFestivalId.value) { showAuthStatus(document.querySelector("#festival-theme-status"), "Choose a festival to preview."); return; } window.open(`index.html?festival=${encodeURIComponent(activeFestivalId.value)}`, "_blank", "noopener"); });
 
 const renderCustomerView = () => {
   const list = document.querySelector("#customer-list"); if (!list) return;

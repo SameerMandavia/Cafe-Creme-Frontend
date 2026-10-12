@@ -1,13 +1,13 @@
 import { test, expect } from "@playwright/test";
 
 const customerPages = [
-  "home.html", "menu.html", "offers.html", "about.html", "contact.html",
+  "index.html", "menu.html", "offers.html", "about.html", "contact.html",
   "reservations.html", "account.html", "orders.html", "cart.html",
   "login.html", "signup.html",
 ];
 
 async function clearBrowserState(page) {
-  await page.goto("/html/home.html");
+  await page.goto("/html/index.html");
   await page.evaluate(() => {
     localStorage.clear();
     sessionStorage.clear();
@@ -141,7 +141,7 @@ test.describe("application smoke coverage", () => {
   });
 
   test("mobile layout does not create horizontal overflow", async ({ page }) => {
-    await page.goto("/html/home.html");
+    await page.goto("/html/index.html");
     const overflow = await page.evaluate(() => document.documentElement.scrollWidth > document.documentElement.clientWidth + 1);
     expect(overflow).toBe(false);
   });
