@@ -19,7 +19,7 @@ const mime = {
 const server = http.createServer(async (request, response) => {
   try {
     const requestPath = decodeURIComponent(new URL(request.url, "http://localhost").pathname);
-    const relativePath = requestPath === "/" ? "html/index.html" : requestPath.replace(/^\/+/, "");
+    const relativePath = requestPath === "/" ? "html/home.html" : requestPath.replace(/^\/+/, "");
     const filePath = path.resolve(root, relativePath);
     if (!filePath.startsWith(root + path.sep)) throw new Error("Invalid path");
     const body = await fs.readFile(filePath);

@@ -20,5 +20,5 @@ if (!order) {
     <div class="confirmation-items"><h2>Order summary</h2>${order.items.map((item) => `<div class="confirmation-item"><span>${item.quantity} &times; ${escapeOrderHtml(item.name)}</span><strong>${formatCurrency(item.price * item.quantity)}</strong></div>`).join("")}${feeRow}<div class="confirmation-total"><span>Total paid</span><strong>${formatCurrency(order.total)}</strong></div></div>
     ${order.note ? `<p class="confirmation-contact"><strong>Your note:</strong> ${escapeOrderHtml(order.note)}</p>` : ""}
     <p class="confirmation-contact">We will contact you on ${escapeOrderHtml(order.phone)} if we need anything.</p>
-    <div class="confirmation-actions"><a class="btn btn-dark" href="index.html">Back to home</a><a class="btn btn-outline-dark" href="menu.html">Order again</a></div>`;
+    <div class="confirmation-actions"><a class="btn btn-dark" href="home.html">Back to home</a><a class="btn btn-outline-dark" href="menu.html">Order again</a></div>`;
 }

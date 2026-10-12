@@ -16,7 +16,7 @@ export default defineConfig({
   },
   webServer: {
     command: "node tests/server.mjs",
-    url: "http://127.0.0.1:4173/html/index.html",
+    url: "http://127.0.0.1:4173/html/home.html",
     reuseExistingServer: true,
     timeout: 10_000,
   },
